@@ -15,7 +15,11 @@ export default function Home() {
         <header className="bg-white shadow-sm border-b">
           <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
             <div className="flex items-center space-x-2">
-              <span className="text-2xl font-bold text-blue-600">Assure</span>
+              <img 
+  src="/logo-involve-assure.svg" 
+  alt="Assure" 
+  className="h-8 w-auto"
+/>
             </div>
             
             <nav className="hidden md:flex space-x-8">
@@ -97,7 +101,13 @@ export default function Home() {
           <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-4 gap-8">
               <div>
-                <span className="text-xl font-bold text-blue-600 mb-4 block">Assure</span>
+                <div className="mb-4">
+  <img 
+    src="/logo-involve-assure.svg" 
+    alt="Assure" 
+    className="h-6 w-auto"
+  />
+</div>
                 <p className="text-gray-600 text-sm">
                   A purpose-built GRC platform tailored to licensed gaming venues.
                 </p>
