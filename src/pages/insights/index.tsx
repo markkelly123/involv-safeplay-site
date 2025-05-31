@@ -29,7 +29,7 @@ export default function Insights({ posts }: InsightsPageProps) {
           {posts.length === 0 ? (
             <div className="text-center text-gray-400 py-12">
               <p className="text-xl mb-4">No posts found for Assure.</p>
-              <p className="mb-4">Create content in Sanity Studio and tag it with 'assure' site.</p>
+              <p className="mb-4">Create content in Sanity Studio and tag it with &apos;assure&apos; site.</p>
               <p>
                 <Link href="http://localhost:3333" className="text-blue-400 hover:underline">
                   Open Sanity Studio
