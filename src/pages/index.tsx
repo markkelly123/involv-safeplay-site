@@ -105,8 +105,8 @@ export default function Home({ insights }: HomePageProps) {
   return (
     <>
       <Head>
-        <title>Involv Assure - Know You're Meeting Your Compliance Obligations</title>
-        <meta name="description" content="Simple compliance tracking for Australian gaming venues. Know what you need to do, when it's due, and that you're meeting your obligations. No surprises, no enforcement orders." />
+        <title>Involv Assure - Ensure You&apos;re Meeting Your Compliance Obligations</title>
+        <meta name="description" content="Simple compliance tracking for Australian gaming venues. Know what you need to do, when it&apos;s due, and that you&apos;re meeting your obligations. No surprises, no enforcement orders." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -146,7 +146,7 @@ export default function Home({ insights }: HomePageProps) {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
                 <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-                  Know You're Meeting Your Compliance Obligations
+                  Know You&apos;re Meeting Your Compliance Obligations
                 </h1>
                 <p className="text-xl mb-6 font-medium text-blue-100">
                   A risk and compliance team in your browser.
@@ -192,7 +192,7 @@ export default function Home({ insights }: HomePageProps) {
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">From Guessing to Knowing</h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Most venues manage compliance informally. There's a better way to stay on top of your obligations.
+                Most venues manage compliance informally. There&apos;s a better way to stay on top of your obligations.
               </p>
             </div>
 
@@ -271,7 +271,7 @@ export default function Home({ insights }: HomePageProps) {
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Built for Gaming Venues</h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Assure understands gaming venue operations. No generic software that doesn't fit your business.
+                Assure understands gaming venue operations. No generic software that doesn&apos;t fit your business.
               </p>
             </div>
 
@@ -297,7 +297,7 @@ export default function Home({ insights }: HomePageProps) {
             <h2 className="text-3xl font-bold text-gray-900 mb-8">Venues Using Assure Report</h2>
             <div className="bg-gray-50 rounded-lg p-8 mb-8">
               <blockquote className="text-lg text-gray-700 italic mb-4">
-                "Finally know what we need to do and when. No more wondering if we're missing something important."
+                "Finally know what we need to do and when. No more wondering if we&apos;re missing something important."
               </blockquote>
               <div className="text-sm text-gray-600">
                 — Gaming Manager, Regional RSL Club
@@ -314,7 +314,7 @@ export default function Home({ insights }: HomePageProps) {
               </div>
               <div>
                 <div className="text-2xl font-bold text-blue-600 mb-1">Peace of Mind</div>
-                <div className="text-gray-600 text-sm">Know you're meeting requirements</div>
+                <div className="text-gray-600 text-sm">Ensure you&apos;re meeting requirements</div>
               </div>
             </div>
           </div>
@@ -431,7 +431,7 @@ const complianceConcerns = [
   "What happens if we miss a regulatory requirement?",
   "How do we know what training staff need and when?",
   "Are our policies and procedures up to date?",
-  "What if there's an inspection tomorrow?"
+  "What if there&apos;s an inspection tomorrow?"
 ]
 
 const currentApproach = [
@@ -449,7 +449,7 @@ const assureApproach = [
   "Staff training schedules and reminders",
   "All compliance documents in one place",
   "Proactive management of regulatory obligations",
-  "Confidence you're meeting your responsibilities"
+  "Confidence you&apos;re meeting your responsibilities"
 ]
 
 const howItWorksSteps = [
@@ -460,7 +460,7 @@ const howItWorksSteps = [
   },
   {
     title: "Track Your Obligations",
-    description: "Clear view of what you need to do, when it's due, and who's responsible.",
+    description: "Clear view of what you need to do, when it&apos;s due, and who&apos;s responsible.",
     example: "RSA renewal dates, policy review schedules, audit requirements"
   },
   {
