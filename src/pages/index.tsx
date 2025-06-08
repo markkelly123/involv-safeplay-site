@@ -1,494 +1,396 @@
-import Head from 'next/head'
 import Link from 'next/link'
+import Image from 'next/image'
 import { GetStaticProps } from 'next'
-import { getPosts, Post, buildImageUrl } from '../../lib/sanity'
+import { sanity, getPosts } from '../../lib/sanity'
+import Navigation from '../components/Navigation'
+import Footer from '../components/Footer'
+
+interface Post {
+  _id: string
+  title: string
+  slug: { current: string }
+  excerpt?: string
+  publishedAt: string
+  author: {
+    name: string
+    role?: string
+    image?: {
+      asset: {
+        url: string
+      }
+      alt?: string
+    }
+  }
+  mainImage?: {
+    asset: {
+      url: string
+    }
+    alt?: string
+  }
+  categories: Array<{
+    _id: string
+    title: string
+  }>
+  estimatedReadingTime?: number
+}
 
 interface HomePageProps {
-  insights: Post[]
+  posts: Post[]
 }
 
-function InsightsSection({ insights }: { insights: Post[] }) {
-  if (!insights || insights.length === 0) {
-    return null // Section disappears if no posts
-  }
-
+export default function HomePage({ posts }: HomePageProps) {
   return (
-    <section className="bg-gray-50 py-16 px-4">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Latest Compliance Insights</h2>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Stay ahead of regulatory changes with expert insights tailored to Australian gaming venues.
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-          {insights.slice(0, 3).map((post) => (
-            <article key={post._id} className="bg-white rounded-lg overflow-hidden border border-gray-200 hover:border-blue-300 hover:shadow-lg transition-all">
-              {/* Article Image */}
-              {post.mainImage?.asset?.url ? (
-                <div className="aspect-video w-full bg-gray-100">
-                  <img 
-                    src={buildImageUrl(post.mainImage.asset.url, 400, 225, 75)} 
-                    alt={post.mainImage.alt || post.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ) : (
-                <div className="aspect-video w-full bg-gradient-to-br from-blue-100 to-gray-100 flex items-center justify-center">
-                  <div className="text-center text-gray-400">
-                    <svg className="w-10 h-10 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                </div>
-              )}
-              
-              <div className="p-6">
-                {/* Categories */}
-                {post.categories && post.categories.length > 0 && (
-                  <div className="flex gap-2 mb-3">
-                    {post.categories.slice(0, 2).map((category) => (
-                      <span key={category._id} className="bg-blue-600 text-white px-2 py-1 rounded text-xs font-medium">
-                        {category.title}
-                      </span>
-                    ))}
-                  </div>
-                )}
-                
-                {/* Title & Excerpt */}
-                <h3 className="text-lg font-semibold text-gray-900 mb-3 line-clamp-2">
-                  <Link href={`/insights/${post.slug.current}`} className="hover:text-blue-600 transition-colors">
-                    {post.title}
-                  </Link>
-                </h3>
-                
-                {post.excerpt && (
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                    {post.excerpt}
-                  </p>
-                )}
-                
-                {/* Author & Date */}
-                <div className="flex items-center text-xs text-gray-500">
-                  <span>{post.author?.name || 'Assure Team'}</span>
-                  <span className="mx-2">•</span>
-                  <span>{new Date(post.publishedAt).toLocaleDateString('en-AU', {
-                    day: 'numeric',
-                    month: 'short',
-                    year: 'numeric'
-                  })}</span>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-        
-        {/* View All Link */}
-        <div className="text-center">
-          <Link 
-            href="/insights" 
-            className="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
-          >
-            View All Insights
-            <svg className="w-4 h-4 ml-2" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-            </svg>
-          </Link>
-        </div>
-      </div>
-    </section>
-  )
-}
+    <div className="min-h-screen bg-white">
+      {/* Navigation Component */}
+      <Navigation />
 
-export default function Home({ insights }: HomePageProps) {
-  return (
-    <>
-      <Head>
-        <title>Involv Assure - Ensure You&apos;re Meeting Your Compliance Obligations</title>
-        <meta name="description" content="Simple compliance tracking for Australian gaming venues. Know what you need to do, when it&apos;s due, and that you&apos;re meeting your obligations. No surprises, no enforcement orders." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <div className="min-h-screen bg-white">
-        {/* Header */}
-        <header className="bg-white shadow-sm border-b">
-          <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div className="flex items-center space-x-2">
-              <img 
-                src="/logo-involve-assure.svg" 
-                alt="Involv Assure" 
-                className="h-8 w-auto"
-              />
-            </div>
-            
-            <nav className="hidden md:flex space-x-8">
-              <Link href="/features" className="text-gray-700 hover:text-gray-900">How It Works</Link>
-              <Link href="/pricing" className="text-gray-700 hover:text-gray-900">Pricing</Link>
-              <Link href="/insights" className="text-gray-700 hover:text-gray-900">Insights</Link>
-            </nav>
-            
-            <div className="flex items-center space-x-4">
-              <Link href="/login" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors">
-                Login
+      {/* Hero Section */}
+      <section className="bg-gradient-to-br from-blue-50 to-white py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+              A risk and compliance team in your browser.
+            </h1>
+            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+              Streamline your AML, gaming compliance, and risk management with Australia's first 
+              GRC platform built specifically for pubs and clubs offering electronic gaming machines.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Link 
+                href="/contact" 
+                className="bg-[#1e40af] text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center"
+              >
+                <i className="lni lni-rocket-6 mr-2"></i>
+                Schedule a Demo
               </Link>
-              <Link href="/contact" className="border border-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-50 transition-colors">
-                Get Demo
+              <Link 
+                href="/demo" 
+                className="border border-gray-300 text-gray-700 px-8 py-4 rounded-lg font-semibold hover:bg-gray-50 transition-colors flex items-center"
+              >
+                <i className="lni lni-play mr-2"></i>
+                Watch Demo
               </Link>
             </div>
           </div>
-        </header>
+        </div>
+      </section>
 
-        {/* Hero Section - Realistic Problems */}
-        <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20 px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-                  Know You&apos;re Meeting Your Compliance Obligations
-                </h1>
-                <p className="text-xl mb-6 font-medium text-blue-100">
-                  A risk and compliance team in your browser.
-                </p>
-                <p className="text-lg text-blue-100 mb-8 leading-relaxed">
-                  Not sure what regulations apply to your venue? Worried about enforcement orders? Assure shows you exactly what you need to do and helps you stay on top of it all.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Link href="/contact" className="bg-white text-blue-600 px-8 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors text-center">
-                    See How It Works
-                  </Link>
-                  <Link href="/login" className="border border-white text-white px-8 py-3 rounded-lg hover:bg-white hover:text-blue-600 transition-colors text-center">
-                    Try Assure Free
-                  </Link>
-                </div>
-              </div>
-              
-              <div className="bg-white bg-opacity-10 rounded-lg p-8 backdrop-blur-sm">
-                <div className="text-center mb-6">
-                  <h3 className="text-xl font-semibold mb-4">Common Compliance Concerns</h3>
-                </div>
-                <div className="space-y-4">
-                  {complianceConcerns.map((concern, index) => (
-                    <div key={index} className="flex items-start">
-                      <div className="text-blue-200 mr-3 mt-1">
-                        <span className="text-lg">🤔</span>
-                      </div>
-                      <p className="text-blue-100 text-sm">{concern}</p>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-6 pt-4 border-t border-blue-300 text-center">
-                  <p className="text-blue-200 text-sm font-medium">We help you get clear on all of this.</p>
-                </div>
-              </div>
-            </div>
+      {/* Features Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Everything you need for compliance
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Purpose-built for Australian pubs and clubs, Assure simplifies complex compliance requirements.
+            </p>
           </div>
-        </section>
 
-        {/* Current Approach vs Better Way */}
-        <section className="py-16 px-4 bg-gray-50">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">From Guessing to Knowing</h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Most venues manage compliance informally. There&apos;s a better way to stay on top of your obligations.
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Feature 1 - AML Compliance */}
+            <Link href="/features" className="text-center group cursor-pointer">
+              <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-6 group-hover:bg-[#1e40af] transition-colors">
+                <i className="lni lni-shield-1 text-3xl text-[#1e40af] group-hover:text-white transition-colors"></i>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4 group-hover:text-[#1e40af] transition-colors">AML Compliance</h3>
+              <p className="text-gray-600 group-hover:text-gray-700 transition-colors">
+                Comprehensive anti-money laundering tools designed for gaming venues with built-in AUSTRAC reporting.
               </p>
-            </div>
+            </Link>
 
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              {/* Current Approach */}
-              <div className="bg-white border border-gray-200 rounded-lg p-8">
-                <div className="text-center mb-6">
-                  <div className="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-3xl">🤷</span>
+            {/* Feature 2 - Risk Management */}
+            <Link href="/features" className="text-center group cursor-pointer">
+              <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-6 group-hover:bg-[#1e40af] transition-colors">
+                <i className="lni lni-file-check text-3xl text-[#1e40af] group-hover:text-white transition-colors"></i>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4 group-hover:text-[#1e40af] transition-colors">Risk Management</h3>
+              <p className="text-gray-600 group-hover:text-gray-700 transition-colors">
+                Automated risk assessments and monitoring with customisable frameworks for your venue's specific needs.
+              </p>
+            </Link>
+
+            {/* Feature 3 - Regulatory Reporting */}
+            <Link href="/features" className="text-center group cursor-pointer">
+              <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-6 group-hover:bg-[#1e40af] transition-colors">
+                <i className="lni lni-bar-chart-4 text-3xl text-[#1e40af] group-hover:text-white transition-colors"></i>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4 group-hover:text-[#1e40af] transition-colors">Regulatory Reporting</h3>
+              <p className="text-gray-600 group-hover:text-gray-700 transition-colors">
+                Streamlined reporting for all Australian jurisdictions with automated compliance tracking and alerts.
+              </p>
+            </Link>
+
+            {/* Feature 4 - Team Management */}
+            <Link href="/features" className="text-center group cursor-pointer">
+              <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-6 group-hover:bg-[#1e40af] transition-colors">
+                <i className="lni lni-users text-3xl text-[#1e40af] group-hover:text-white transition-colors"></i>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4 group-hover:text-[#1e40af] transition-colors">Team Management</h3>
+              <p className="text-gray-600 group-hover:text-gray-700 transition-colors">
+                Role-based access controls and training modules to ensure your entire team stays compliant.
+              </p>
+            </Link>
+
+            {/* Feature 5 - Real-time Monitoring */}
+            <Link href="/features" className="text-center group cursor-pointer">
+              <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-6 group-hover:bg-[#1e40af] transition-colors">
+                <i className="lni lni-timer-1 text-3xl text-[#1e40af] group-hover:text-white transition-colors"></i>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4 group-hover:text-[#1e40af] transition-colors">Real-time Monitoring</h3>
+              <p className="text-gray-600 group-hover:text-gray-700 transition-colors">
+                24/7 compliance monitoring with instant alerts for suspicious activities and regulatory changes.
+              </p>
+            </Link>
+
+            {/* Feature 6 - Custom Workflows */}
+            <Link href="/features" className="text-center group cursor-pointer">
+              <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-6 group-hover:bg-[#1e40af] transition-colors">
+                <i className="lni lni-code-branch text-3xl text-[#1e40af] group-hover:text-white transition-colors"></i>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4 group-hover:text-[#1e40af] transition-colors">Custom Workflows</h3>
+              <p className="text-gray-600 group-hover:text-gray-700 transition-colors">
+                Configurable compliance workflows that adapt to your venue's operational requirements and processes.
+              </p>
+            </Link>
+          </div>
+
+          {/* Explore Features CTA */}
+          <div className="text-center mt-12">
+            <Link 
+              href="/features" 
+              className="inline-flex items-center bg-gray-100 text-gray-700 px-8 py-4 rounded-lg font-semibold hover:bg-gray-200 transition-colors"
+            >
+              <i className="lni lni-cog mr-2"></i>
+              Explore all Features
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                Built for Australian pubs and clubs
+              </h2>
+              <p className="text-lg text-gray-600 mb-8">
+                Unlike generic compliance tools, Assure understands the unique challenges facing 
+                Australian gaming venues. We've built every feature with your specific regulatory 
+                requirements in mind.
+              </p>
+              
+              <div className="space-y-6">
+                <div className="flex items-start">
+                  <div className="flex-shrink-0">
+                    <i className="lni lni-check-circle-1 text-2xl text-green-500 mt-1"></i>
                   </div>
-                  <h3 className="text-xl font-bold text-orange-700 mb-2">How Most Venues Handle Compliance</h3>
-                  <p className="text-orange-600 text-sm">Informal, reactive, uncertain</p>
+                  <div className="ml-4">
+                    <h3 className="text-lg font-semibold text-gray-900">Australian-first design</h3>
+                    <p className="text-gray-600">
+                      Pre-configured for AUSTRAC, state gaming regulations, and local compliance requirements.
+                    </p>
+                  </div>
                 </div>
-                <ul className="space-y-3">
-                  {currentApproach.map((approach, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-orange-500 mr-2 mt-1">•</span>
-                      <span className="text-gray-700 text-sm">{approach}</span>
-                    </li>
-                  ))}
-                </ul>
+
+                <div className="flex items-start">
+                  <div className="flex-shrink-0">
+                    <i className="lni lni-check-circle-1 text-2xl text-green-500 mt-1"></i>
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-lg font-semibold text-gray-900">Expert support</h3>
+                    <p className="text-gray-600">
+                      Backed by Australia's leading gaming compliance consultants with decades of experience.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start">
+                  <div className="flex-shrink-0">
+                    <i className="lni lni-check-circle-1 text-2xl text-green-500 mt-1"></i>
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-lg font-semibold text-gray-900">Venue-focused features</h3>
+                    <p className="text-gray-600">
+                      Purpose-built for gaming floors, not generic business compliance needs.
+                    </p>
+                  </div>
+                </div>
               </div>
 
-              {/* Better Way */}
-              <div className="bg-white border border-green-200 rounded-lg p-8">
-                <div className="text-center mb-6">
-                  <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-3xl">✅</span>
+              {/* Subtle CTA in benefits section */}
+              <div className="mt-8">
+                <Link 
+                  href="/features" 
+                  className="inline-flex items-center text-[#1e40af] font-medium hover:text-blue-700 transition-colors text-lg"
+                >
+                  See how it works
+                  <i className="lni lni-arrow-right text-xl ml-1"></i>
+                </Link>
+              </div>
+            </div>
+
+            <div className="relative">
+              <div className="bg-white rounded-2xl shadow-xl p-8">
+                <div className="text-center">
+                  <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i className="lni lni-alarm-check text-4xl text-green-600"></i>
                   </div>
-                  <h3 className="text-xl font-bold text-green-700 mb-2">How Assure Changes This</h3>
-                  <p className="text-green-600 text-sm">Organised, proactive, confident</p>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">Save 20+ hours per week</h3>
+                  <p className="text-gray-600 mb-6">
+                    Automate manual compliance tasks and reduce the time spent on regulatory reporting.
+                  </p>
+                  <div className="flex items-center justify-center space-x-4 text-sm text-gray-500">
+                    <div className="flex items-center">
+                      <i className="lni lni-users mr-1"></i>
+                      <span>Dozens of venues</span>
+                    </div>
+                    <div className="flex items-center">
+                      <i className="lni lni-star-fat mr-1 text-yellow-400"></i>
+                      <span>4.9/5 rating</span>
+                    </div>
+                  </div>
                 </div>
-                <ul className="space-y-3">
-                  {assureApproach.map((approach, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-green-500 mr-2 mt-1">✓</span>
-                      <span className="text-gray-700 text-sm">{approach}</span>
-                    </li>
-                  ))}
-                </ul>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* How It Works - Practical Steps */}
-        <section className="py-16 px-4 bg-white">
-          <div className="max-w-6xl mx-auto">
+      {/* Insights Section */}
+      {posts && posts.length > 0 && (
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">How Assure Works</h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Purpose-built for Australian gaming venues. Simple steps to get you organised and keep you compliant.
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Latest Insights
+              </h2>
+              <p className="text-xl text-gray-600">
+                Stay informed with expert analysis and industry updates
               </p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
-              {howItWorksSteps.map((step, index) => (
-                <div key={step.title} className="text-center">
-                  <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <span className="text-2xl font-bold text-blue-600">{index + 1}</span>
-                  </div>
-                  <h3 className="text-xl font-semibold mb-4 text-gray-900">{step.title}</h3>
-                  <p className="text-gray-600 mb-4">{step.description}</p>
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <p className="text-sm text-gray-700 italic">"{step.example}"</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Built for Gaming Venues */}
-        <section className="py-16 px-4 bg-gray-50">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Built for Gaming Venues</h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Assure understands gaming venue operations. No generic software that doesn&apos;t fit your business.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {venueFeatures.map((feature) => (
-                <div key={feature.title} className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
-                  <div className="text-center mb-4">
-                    <div className="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mx-auto mb-3">
-                      <span className="text-2xl">{feature.icon}</span>
+              {posts.slice(0, 3).map((post) => (
+                <article key={post._id} className="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow">
+                  {post.mainImage && (
+                    <div className="aspect-video relative overflow-hidden rounded-t-lg">
+                      <img
+                        src={post.mainImage.asset.url}
+                        alt={post.mainImage.alt || post.title}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
-                    <h3 className="font-semibold text-gray-900">{feature.title}</h3>
+                  )}
+                  
+                  <div className="p-6">
+                    <div className="flex items-center text-sm text-gray-500 mb-3">
+                      <div className="flex items-center">
+                        <i className="lni lni-calendar mr-1"></i>
+                        <time dateTime={post.publishedAt}>
+                          {new Date(post.publishedAt).toLocaleDateString('en-AU')}
+                        </time>
+                      </div>
+                      {post.estimatedReadingTime && (
+                        <>
+                          <span className="mx-2">•</span>
+                          <div className="flex items-center">
+                            <i className="lni lni-hourglass mr-1"></i>
+                            <span>{post.estimatedReadingTime} min read</span>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                    
+                    <h3 className="text-xl font-semibold text-gray-900 mb-3 line-clamp-2">
+                      {post.title}
+                    </h3>
+                    
+                    {post.excerpt && (
+                      <p className="text-gray-600 line-clamp-3 mb-4">
+                        {post.excerpt}
+                      </p>
+                    )}
+                    
+                    <Link 
+                      href={`/insights/${post.slug.current}`}
+                      className="inline-flex items-center text-[#1e40af] font-medium hover:text-blue-700 transition-colors"
+                    >
+                      Read more
+                      <i className="lni lni-arrow-right ml-1"></i>
+                    </Link>
                   </div>
-                  <p className="text-gray-600 text-sm text-center">{feature.description}</p>
-                </div>
+                </article>
               ))}
             </div>
-          </div>
-        </section>
 
-        {/* Results Section */}
-        <section className="py-16 px-4 bg-white">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8">Venues Using Assure Report</h2>
-            <div className="bg-gray-50 rounded-lg p-8 mb-8">
-              <blockquote className="text-lg text-gray-700 italic mb-4">
-                "Finally know what we need to do and when. No more wondering if we&apos;re missing something important."
-              </blockquote>
-              <div className="text-sm text-gray-600">
-                — Gaming Manager, Regional RSL Club
-              </div>
-            </div>
-            <div className="grid md:grid-cols-3 gap-8 text-center">
-              <div>
-                <div className="text-2xl font-bold text-blue-600 mb-1">Clear View</div>
-                <div className="text-gray-600 text-sm">Of all compliance obligations</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-blue-600 mb-1">No Surprises</div>
-                <div className="text-gray-600 text-sm">Everything tracked and scheduled</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-blue-600 mb-1">Peace of Mind</div>
-                <div className="text-gray-600 text-sm">Ensure you&apos;re meeting requirements</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="bg-blue-600 py-16 px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-4 text-white">Ready to Get Organised?</h2>
-            <p className="text-lg text-blue-100 mb-8 max-w-2xl mx-auto">
-              See how Assure can help you understand your obligations and stay on top of compliance requirements.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link href="/contact" className="bg-white text-blue-600 px-8 py-3 rounded-lg hover:bg-gray-100 transition-colors font-medium">
-                See How It Works
-              </Link>
-              <Link href="/login" className="border border-white text-white px-8 py-3 rounded-lg hover:bg-white hover:text-blue-600 transition-colors font-medium">
-                Try Free for 30 Days
+            <div className="text-center mt-12">
+              <Link 
+                href="/insights" 
+                className="inline-flex items-center bg-gray-100 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-200 transition-colors"
+              >
+                <i className="lni lni-book-open mr-2"></i>
+                View All Insights
               </Link>
             </div>
           </div>
         </section>
+      )}
 
-        {/* Latest Insights Section */}
-        <InsightsSection insights={insights} />
-
-        {/* Footer */}
-        <footer className="bg-gray-50 border-t py-12 px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-4 gap-8">
-              <div>
-                <div className="mb-4">
-                  <img 
-                    src="/logo-involve-assure.svg" 
-                    alt="Involv Assure" 
-                    className="h-6 w-auto"
-                  />
-                </div>
-                <p className="text-gray-600 text-sm mb-4">
-                  A risk and compliance team in your browser. Purpose-built for Australian gaming venues.
-                </p>
-                <p className="text-gray-500 text-xs">
-                  Part of the <a href="https://involv.com.au" className="hover:text-gray-700">Involv</a> family
-                </p>
-              </div>
-              
-              <div>
-                <h3 className="font-semibold mb-4 text-gray-900">Product</h3>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li><Link href="/features" className="hover:text-gray-900">How It Works</Link></li>
-                  <li><Link href="/pricing" className="hover:text-gray-900">Pricing</Link></li>
-                  <li><Link href="/contact" className="hover:text-gray-900">Get Demo</Link></li>
-                </ul>
-              </div>
-              
-              <div>
-                <h3 className="font-semibold mb-4 text-gray-900">Resources</h3>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li><Link href="/insights" className="hover:text-gray-900">Compliance Insights</Link></li>
-                  <li><Link href="/case-studies" className="hover:text-gray-900">Success Stories</Link></li>
-                  <li><Link href="/contact" className="hover:text-gray-900">Support</Link></li>
-                </ul>
-              </div>
-              
-              <div>
-                <h3 className="font-semibold mb-4 text-gray-900">Expert Advisory</h3>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li><a href="https://involv.com.au" className="hover:text-gray-900">Involv Advisory</a></li>
-                  <li><a href="https://primeedge.involv.com.au" className="hover:text-gray-900">PrimeEdge Gaming</a></li>
-                  <li><a href="https://lane.involv.com.au" className="hover:text-gray-900">Lane Consulting</a></li>
-                </ul>
-              </div>
-            </div>
-            
-            <div className="border-t border-gray-200 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
-              <p>&copy; 2025 Involv. All rights reserved.</p>
-              <div className="flex space-x-6 mt-4 md:mt-0">
-                <Link href="/privacy-policy" className="hover:text-gray-700">Privacy Policy</Link>
-                <Link href="/terms-of-use" className="hover:text-gray-700">Terms of Use</Link>
-              </div>
-            </div>
+      {/* CTA Section */}
+      <section className="py-20 bg-[#1e40af]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            Nail your compliance and risk management?
+          </h2>
+          <p className="text-xl text-blue-100 mb-8">
+            Join the many Australian venues already using Assure to stay compliant and save time.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link 
+              href="/contact" 
+              className="bg-white text-[#1e40af] px-8 py-4 rounded-lg font-semibold hover:bg-gray-50 transition-colors flex items-center justify-center"
+            >
+              <i className="lni lni-envelope-2 mr-2"></i>
+              Schedule a Demo
+            </Link>
+            <Link 
+              href="/pricing" 
+              className="border border-blue-300 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-600 transition-colors flex items-center justify-center"
+            >
+              <i className="lni lni-tap-quick mr-2"></i>
+              View Pricing
+            </Link>
           </div>
-        </footer>
-      </div>
-    </>
+        </div>
+      </section>
+
+      {/* Footer Component */}
+      <Footer />
+    </div>
   )
 }
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
-    // Fetch recent insights for the homepage
-    const insights = await getPosts('assure', 3)
-    
+    // Use the existing getPosts function from your sanity.ts file
+    const posts = await getPosts('assure', 3)
+
     return {
       props: {
-        insights,
+        posts: posts || []
       },
-      revalidate: 300, // Revalidate every 5 minutes
+      revalidate: 300
     }
   } catch (error) {
-    console.error('Error fetching insights for homepage:', error)
+    console.error('Error fetching posts:', error)
     return {
       props: {
-        insights: [],
+        posts: []
       },
-      revalidate: 300,
+      revalidate: 300
     }
   }
 }
-
-// Data
-const complianceConcerns = [
-  "Are we meeting all our gaming licence conditions?",
-  "What happens if we miss a regulatory requirement?",
-  "How do we know what training staff need and when?",
-  "Are our policies and procedures up to date?",
-  "What if there&apos;s an inspection tomorrow?"
-]
-
-const currentApproach = [
-  "Rely on memory and informal tracking",
-  "Check regulations only when problems arise",
-  "Hope staff training is up to date",
-  "Keep compliance documents in various places", 
-  "React to regulatory issues as they happen",
-  "Worry about missing something important"
-]
-
-const assureApproach = [
-  "Clear view of all compliance requirements",
-  "Automated tracking of deadlines and renewals",
-  "Staff training schedules and reminders",
-  "All compliance documents in one place",
-  "Proactive management of regulatory obligations",
-  "Confidence you&apos;re meeting your responsibilities"
-]
-
-const howItWorksSteps = [
-  {
-    title: "See What Applies to You",
-    description: "Assure identifies the regulations that apply to your specific venue type and location.",
-    example: "Gaming licence conditions, liquor requirements, staff training obligations"
-  },
-  {
-    title: "Track Your Obligations",
-    description: "Clear view of what you need to do, when it&apos;s due, and who&apos;s responsible.",
-    example: "RSA renewal dates, policy review schedules, audit requirements"
-  },
-  {
-    title: "Stay on Top of Everything",
-    description: "Automated reminders and documentation keep you organised and prepared.",
-    example: "Training alerts, compliance reports, inspection readiness"
-  }
-]
-
-const venueFeatures = [
-  {
-    title: "Gaming Licence Tracking",
-    icon: "🎰",
-    description: "Monitor gaming licence conditions and obligations specific to your state and territory."
-  },
-  {
-    title: "Liquor Compliance",
-    icon: "🍺",
-    description: "Track liquor licence requirements, RSA training, and renewal deadlines."
-  },
-  {
-    title: "AML Requirements",
-    icon: "🛡️",
-    description: "Manage AUSTRAC obligations and customer due diligence requirements."
-  },
-  {
-    title: "Staff Training",
-    icon: "🎓",
-    description: "Track RSG, RSA, and other mandatory training with renewal reminders."
-  }
-]

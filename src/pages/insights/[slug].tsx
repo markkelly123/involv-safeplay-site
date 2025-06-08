@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { GetStaticProps, GetStaticPaths } from 'next'
 import { PortableText } from '@portabletext/react'
 import { getPost, getPosts, Post, buildImageUrl, calculateReadingTime } from '../../../lib/sanity'
+import Navigation from '../../components/Navigation'
+import Footer from '../../components/Footer'
 
 interface PostPageProps {
   post: Post
@@ -41,17 +43,8 @@ export default function PostPage({ post }: PostPageProps) {
       </Head>
 
       <div className="bg-white text-gray-900 font-sans min-h-screen">
-        {/* Header */}
-        <header className="bg-white border-b border-gray-200 py-4">
-          <div className="max-w-4xl mx-auto px-4">
-            <Link href="/" className="text-blue-600 hover:text-blue-700 flex items-center">
-              <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
-              </svg>
-              Assure
-            </Link>
-          </div>
-        </header>
+        {/* Navigation Component */}
+        <Navigation />
 
         <article className="max-w-4xl mx-auto px-4 py-12">
           {/* Breadcrumb */}
@@ -213,6 +206,9 @@ export default function PostPage({ post }: PostPageProps) {
             </div>
           </div>
         </article>
+
+        {/* Footer Component */}
+        <Footer />
       </div>
     </>
   )

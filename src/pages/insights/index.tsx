@@ -2,6 +2,8 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { GetStaticProps } from 'next'
 import { getPosts, Post, buildImageUrl, calculateReadingTime } from '../../../lib/sanity'
+import Navigation from '../../components/Navigation'
+import Footer from '../../components/Footer'
 
 interface InsightsPageProps {
   posts: Post[]
@@ -18,11 +20,14 @@ export default function Insights({ posts }: InsightsPageProps) {
       </Head>
 
       <div className="bg-white text-gray-900 font-sans min-h-screen">
+        {/* Navigation Component */}
+        <Navigation />
+
         <div className="max-w-7xl mx-auto px-4 py-12">
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold mb-4 text-gray-900">Assure Insights</h1>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Stay compliant and optimise your gaming operations with expert insights on GRC and EGM performance.
+              Stay compliant and optimise your gaming operations with expert insights on venue governance, risk & compliance (GRC)
             </p>
           </div>
           
@@ -166,6 +171,9 @@ export default function Insights({ posts }: InsightsPageProps) {
             </Link>
           </div>
         </div>
+
+        {/* Footer Component */}
+        <Footer />
       </div>
     </>
   )
