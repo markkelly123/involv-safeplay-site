@@ -7,13 +7,13 @@ export default function Document() {
         {/* LineIcons Pro CDN */}
         <link 
           rel="stylesheet" 
-          href="https://pro-cdn.lineicons.com/5.0/regular/lineicons.css"
+          href="https://pro-cdn.lineicons.com/5.0/regular/lineicons.css" 
         />
-        <link
-          rel="stylesheet"
-          href="https://pro-cdn.lineicons.com/5.0/solid/lineicons-solid.css">
-        </link>
-        
+        <link 
+          rel="stylesheet" 
+          href="https://pro-cdn.lineicons.com/5.0/solid/lineicons-solid.css" 
+        />
+                
         {/* Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
