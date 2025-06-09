@@ -63,9 +63,12 @@ export default function Navigation({ currentPath = '' }: NavigationProps) {
 
           </nav>
 
-          {/* Right Side - Contact and Login */}
+          {/* Right Side - About, Contact and Login */}
           <div className="flex items-center text-sm">
             <div className="hidden lg:flex space-x-6">
+              <Link href="/about" className={getLinkClasses('/about')}>
+                About
+              </Link>
               <Link href="/contact" className={getLinkClasses('/contact')}>
                 Contact
               </Link>
@@ -122,6 +125,11 @@ export default function Navigation({ currentPath = '' }: NavigationProps) {
               {/* FAQs */}
               <Link href="/faqs" className={`block py-2 ${getLinkClasses('/faqs')}`}>
                 FAQs
+              </Link>
+
+              {/* About */}
+              <Link href="/about" className={`block py-2 ${getLinkClasses('/about')}`}>
+                About
               </Link>
 
               {/* Contact */}
