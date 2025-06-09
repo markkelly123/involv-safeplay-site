@@ -1,31 +1,9 @@
-import { Html, Head, Main, NextScript } from 'next/document'
-
-export default function Document() {
-  return (
-    <Html lang="en">
-      <Head>
-        {/* LineIcons Pro CDN */}
-        <link 
-          rel="stylesheet" 
-          href="https://pro-cdn.lineicons.com/5.0/regular/lineicons.css" 
-        />
-        <link 
-          rel="stylesheet" 
-          href="https://pro-cdn.lineicons.com/5.0/solid/lineicons-solid.css" 
-        />
-                
-        {/* Fonts */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link 
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" 
-          rel="stylesheet" 
-        />
-      </Head>
-      <body>
-        <Main />
-        <NextScript />
-      </body>
-    </Html>
-  )
-}
+<Head>
+  {/* Local Lineicons instead of CDN */}
+  <link rel="stylesheet" href="/icons/lineicons.css" />
+  
+  {/* Remove the old Pro CDN links */}
+  {/* Fonts */}
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  {/* ... rest unchanged */}
+</Head>
