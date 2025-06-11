@@ -54,46 +54,12 @@ export default function Contact() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                Ready to simplify your compliance?
+                Ready to streamline your risk & compliance?
               </h1>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Get a personalised demo of Assure and see how Australia's first GRC platform 
-                built for pubs and clubs can transform your risk & compliance operations.
+                Get a personalised demo of Assure or reach out to schedule a call.
               </p>
             </div>
-
-            {/* What to Expect */}
-            <div className="grid md:grid-cols-3 gap-8 mb-12">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <i className="lni lni-timer-1 text-3xl text-[#1e40af]"></i>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">30-minute demo</h3>
-                <p className="text-gray-600">
-                  Tailored to your venue's specific compliance needs and challenges
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <i className="lni lni-person-chalkboard text-3xl text-[#1e40af]"></i>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Expert guidance</h3>
-                <p className="text-gray-600">
-                  Consult with compliance specialists who have a deep understanding of Australian gaming regulations.
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <i className="lni lni-rocket-6 text-3xl text-[#1e40af]"></i>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Live platform tour</h3>
-                <p className="text-gray-600">
-                  See real AML monitoring, risk assessments, and reporting in action
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* Main Content */}
         <section className="py-16">
@@ -102,9 +68,7 @@ export default function Contact() {
               {/* Contact Form */}
               <div>
                 <div className="bg-gray-50 rounded-2xl p-8 border border-gray-200">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                    Schedule Your Demo
-                  </h2>
+                  
                   
                   <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Name Fields */}
@@ -268,8 +232,8 @@ export default function Contact() {
                       type="submit"
                       className="w-full bg-[#1e40af] text-white py-4 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center"
                     >
-                      <i className="lni lni-calendar mr-2"></i>
-                      Schedule My Demo
+
+                      Submit
                     </button>
 
                     <p className="text-sm text-gray-600 text-center">
@@ -292,9 +256,9 @@ export default function Contact() {
                         <i key={i} className="lni lni-star-fat"></i>
                       ))}
                     </div>
-                    <span className="ml-2 text-sm font-medium text-gray-600">5.0 out of 5</span>
+                    <span className="ml-2 text-xs font-medium text-gray-600">5.0 out of 5</span>
                   </div>
-                  <blockquote className="text-lg text-gray-700 mb-6">
+                  <blockquote className="text-sm text-gray-700 mb-6">
                     "Assure mapped all our obligations and transformed our compliance operations. We've reduced our compliance workload by about 60% and, for the first time, we've gained complete visibility into our risk profile. The team at Involv really understands what Clubs need to do to meet their regulatory obligations."
                   </blockquote>
                   <div className="flex items-center">
@@ -302,8 +266,8 @@ export default function Contact() {
                       <i className="lni lni-user-1 text-3xl text-gray-600"></i>
                     </div>
                     <div className="ml-4">
-                      <div className="font-semibold text-gray-900">Sarah Mitchell</div>
-                      <div className="text-gray-600">Manager, Club venue in QLD</div>
+                      <div className="font-semibold text-sm text-gray-900">Sarah Mitchell</div>
+                      <div className="text-sm text-gray-600">Manager, Club venue in QLD</div>
                     </div>
                   </div>
                 </div>
@@ -328,20 +292,20 @@ export default function Contact() {
 
                     <div className="flex items-start">
                       <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
-                        <i className="lni lni-phone text-2xl text-[#1e40af]"></i>
+                        <i className="lni lni-headphone-1-mic text-2xl text-[#1e40af]"></i>
                       </div>
                       <div>
                         <h4 className="font-semibold text-gray-900">Phone</h4>
                         <p className="text-gray-600">Speak with our team directly</p>
                         <a href="tel:+61390000000" className="text-[#1e40af] hover:text-blue-700 font-medium">
-                          1800 000 000
+                          1300 000 000
                         </a>
                       </div>
                     </div>
 
                     <div className="flex items-start">
                       <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
-                        <i className="lni lni-map-marker-plane-2 text-2xl text-[#1e40af]"></i>
+                        <i className="lni lni-map-marker-7 text-2xl text-[#1e40af]"></i>
                       </div>
                       <div>
                         <h4 className="font-semibold text-gray-900">Location</h4>
@@ -364,6 +328,39 @@ export default function Contact() {
                     support@involv.com.au
                   </a>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* What to Expect */}
+            <div className="grid md:grid-cols-3 gap-8 mb-12">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <i className="lni lni-timer-1 text-3xl text-[#1e40af]"></i>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">30-minute demo</h3>
+                <p className="text-gray-600">
+                  Tailored to your venue's specific compliance needs and challenges
+                </p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <i className="lni lni-person-chalkboard text-3xl text-[#1e40af]"></i>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Expert guidance</h3>
+                <p className="text-gray-600">
+                  Consult with compliance specialists who have a deep understanding of Australian gaming regulations.
+                </p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <i className="lni lni-rocket-6 text-3xl text-[#1e40af]"></i>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Live platform tour</h3>
+                <p className="text-gray-600">
+                  See real AML monitoring, risk assessments, and reporting in action
+                </p>
               </div>
             </div>
           </div>
