@@ -52,8 +52,8 @@ export default function HomePage({ posts }: HomePageProps) {
               A risk and compliance team in your browser.
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              Streamline your AML, gaming compliance, and risk management with Australia's first 
-              GRC platform built specifically for pubs and clubs offering electronic gaming machines.
+              Streamline your AML, gaming compliance, and risk management with Australia's only 
+              GRC platform built specifically for pubs and clubs operating EGMs.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link 
@@ -83,7 +83,7 @@ export default function HomePage({ posts }: HomePageProps) {
               Everything you need for compliance
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Purpose-built for Australian pubs and clubs, Assure simplifies complex compliance requirements.
+              Purpose-built for Australian pubs and clubs, Assure simplifies complex risk & compliance requirements.
             </p>
           </div>
 
@@ -95,7 +95,7 @@ export default function HomePage({ posts }: HomePageProps) {
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4 group-hover:text-[#1e40af] transition-colors">AML Compliance</h3>
               <p className="text-gray-600 group-hover:text-gray-700 transition-colors">
-                Comprehensive anti-money laundering tools designed for gaming venues with built-in AUSTRAC reporting.
+                Comprehensive AML tools designed for gaming venues with built-in AUSTRAC reporting.
               </p>
             </Link>
 
@@ -139,7 +139,7 @@ export default function HomePage({ posts }: HomePageProps) {
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4 group-hover:text-[#1e40af] transition-colors">Real-time Monitoring</h3>
               <p className="text-gray-600 group-hover:text-gray-700 transition-colors">
-                24/7 compliance monitoring with instant alerts for suspicious activities and regulatory changes.
+                24/7 compliance monitoring with instant alerts for regulatory changes.
               </p>
             </Link>
 
@@ -268,7 +268,7 @@ export default function HomePage({ posts }: HomePageProps) {
             Nail your compliance and risk management?
           </h2>
           <p className="text-xl text-blue-100 mb-8">
-            Join the many Australian venues already using Assure to stay compliant and save time.
+            Join the Australian venues using Assure to stay compliant and save time.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link 

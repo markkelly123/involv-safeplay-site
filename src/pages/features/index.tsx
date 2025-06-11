@@ -53,7 +53,7 @@ export default function FeaturesPage({ posts }: FeaturesPageProps) {
               <span className="text-[#1e40af]">perfected.</span>
             </h1>
             <p className="text-2xl text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed">
-              The only platform purposely built for Australian pubs and clubs. Stop worrying about enforcement action, 
+              The only GRC platform purposely built for Australian pubs and clubs. Build a culture of compliance 
               and stay focused on what matters - running your venue.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
@@ -284,7 +284,7 @@ export default function FeaturesPage({ posts }: FeaturesPageProps) {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <h2 className="text-5xl font-bold text-gray-900 mb-8 leading-tight">
-                Ditch the clipboards. Embrace smart inspections.
+                <span className="text-[#1e40af]">RE-WRITE THIS SECTION.</span> Ditch the clipboards. Embrace smart inspections.
               </h2>
               <p className="text-xl text-gray-600 mb-8 leading-relaxed">
                 Your staff use tablets to complete inspections anywhere in your venue. 
@@ -505,7 +505,7 @@ export default function FeaturesPage({ posts }: FeaturesPageProps) {
               <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-6">
                 <i className="lni lni-clipboard-check text-2xl text-green-600"></i>
               </div>
-              <h3 className="text-2xl font-semibold text-gray-900 mb-4">Health & Safety</h3>
+              <span className="text-[#1e40af]">STAY AWAY FROM NON-GAMING.</span> <h3 className="text-2xl font-semibold text-gray-900 mb-4">Health & Safety</h3>
               <p className="text-gray-600 mb-6">
                 WHS risk assessments, incident reporting, and safety training - keep your venue and staff safe.
               </p>
@@ -533,6 +533,7 @@ export default function FeaturesPage({ posts }: FeaturesPageProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
+              <span className="text-[#1e40af]">NO MOBILE APP.</span>
               <h2 className="text-5xl font-bold text-gray-900 mb-8 leading-tight">
                 Compliance in your pocket.
               </h2>
