@@ -18,11 +18,57 @@ export default function Contact() {
     currentChallenge: '',
     message: ''
   })
+  
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [submitError, setSubmitError] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission here
-    console.log('Form submitted:', formData)
+    setIsSubmitting(true)
+    setSubmitError(false)
+    
+    try {
+      const form = e.target as HTMLFormElement
+      const formDataObj = new FormData(form)
+      
+      const response = await fetch('https://formspree.io/f/xvgrqlve', {
+        method: 'POST',
+        body: formDataObj,
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+
+      if (response.ok) {
+        setIsSubmitted(true)
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          company: '',
+          jobTitle: '',
+          phone: '',
+          venueType: '',
+          currentChallenge: '',
+          message: ''
+        })
+        
+        // Reset success message after 5 seconds
+        setTimeout(() => {
+          setIsSubmitted(false)
+        }, 5000)
+      } else {
+        const data = await response.json()
+        console.error('Form submission failed:', data)
+        setSubmitError(true)
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      setSubmitError(true)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -35,7 +81,7 @@ export default function Contact() {
   return (
     <>
       <Head>
-        <title>Contact Sales - Schedule Your Involv|Assure Demo</title>
+        <title>Contact Sales - Schedule Your Assure Demo</title>
         <meta name="description" content="Get a personalised demo of Involv's Assure GRC platform. Speak with our experts about AML, risk management, and regulatory compliance for Australian pubs and clubs." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* Favicon */}
@@ -60,6 +106,8 @@ export default function Contact() {
                 Get a personalised demo of Assure or reach out to schedule a call.
               </p>
             </div>
+          </div>
+        </section>
 
         {/* Main Content */}
         <section className="py-16">
@@ -68,9 +116,43 @@ export default function Contact() {
               {/* Contact Form */}
               <div>
                 <div className="bg-gray-50 rounded-2xl p-8 border border-gray-200">
-                  
+                  {/* Success Message */}
+                  {isSubmitted && (
+                    <div className="mb-8 p-6 bg-green-50 border border-green-200 rounded-lg">
+                      <div className="flex items-center">
+                        <svg className="w-6 h-6 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <div>
+                          <h3 className="text-lg font-semibold text-green-800 mb-1">Thank you for your interest.</h3>
+                          <p className="text-green-700 text-sm">We've received your demo request and will be in touch within 24 hours to schedule your personalised Assure demonstration.</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Error Message */}
+                  {submitError && (
+                    <div className="mb-8 p-6 bg-red-50 border border-red-200 rounded-lg">
+                      <div className="flex items-center">
+                        <div className="w-6 h-6 text-red-600 mr-3">⚠</div>
+                        <div>
+                          <h3 className="text-lg font-semibold text-red-800 mb-1">Something went wrong</h3>
+                          <p className="text-red-700 text-sm">Please try again or contact us directly at hello@involv.com.au</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                   
                   <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Hidden fields for Formspree */}
+                    <input type="hidden" name="_subject" value="Assure Demo Request - New Lead" />
+                    <input type="hidden" name="_next" value={typeof window !== 'undefined' ? window.location.href : ''} />
+                    <input type="hidden" name="_cc" value="hello@involv.com.au" />
+                    <input type="hidden" name="site" value="Assure" />
+                    <input type="hidden" name="form_type" value="Demo Request" />
+                    <input type="hidden" name="_template" value="table" />
+                    
                     {/* Name Fields */}
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
@@ -85,6 +167,7 @@ export default function Contact() {
                           value={formData.firstName}
                           onChange={handleChange}
                           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
+                          placeholder="Your first name"
                         />
                       </div>
                       <div>
@@ -99,6 +182,7 @@ export default function Contact() {
                           value={formData.lastName}
                           onChange={handleChange}
                           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
+                          placeholder="Your last name"
                         />
                       </div>
                     </div>
@@ -116,6 +200,7 @@ export default function Contact() {
                         value={formData.email}
                         onChange={handleChange}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
+                        placeholder="your.email@company.com.au"
                       />
                     </div>
 
@@ -133,6 +218,7 @@ export default function Contact() {
                           value={formData.company}
                           onChange={handleChange}
                           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
+                          placeholder="Your venue or company name"
                         />
                       </div>
                       <div>
@@ -146,6 +232,7 @@ export default function Contact() {
                           value={formData.jobTitle}
                           onChange={handleChange}
                           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
+                          placeholder="Your role or position"
                         />
                       </div>
                     </div>
@@ -162,6 +249,7 @@ export default function Contact() {
                         value={formData.phone}
                         onChange={handleChange}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
+                        placeholder="04XX XXX XXX"
                       />
                     </div>
 
@@ -201,8 +289,8 @@ export default function Contact() {
                       >
                         <option value="">Select primary challenge</option>
                         <option value="aml">AML/CTF Compliance</option>
-                        <option value="risk">Obligation Mapping and Controls</option>
-                        <option value="risk">Regulatory Compliance</option>
+                        <option value="obligations">Obligation Mapping and Controls</option>
+                        <option value="regulatory">Regulatory Compliance</option>
                         <option value="risk">Risk Management</option>
                         <option value="reporting">Regulatory Reporting</option>
                         <option value="training">Staff Training & Management</option>
@@ -230,10 +318,20 @@ export default function Contact() {
                     {/* Submit Button */}
                     <button
                       type="submit"
-                      className="w-full bg-[#1e40af] text-white py-4 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center"
+                      disabled={isSubmitting}
+                      className="w-full bg-[#1e40af] text-white py-4 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-
-                      Submit
+                      {isSubmitting ? (
+                        <>
+                          <svg className="w-5 h-5 mr-2 animate-spin" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                          </svg>
+                          Submitting...
+                        </>
+                      ) : (
+                        'Submit Demo Request'
+                      )}
                     </button>
 
                     <p className="text-sm text-gray-600 text-center">
@@ -253,7 +351,9 @@ export default function Contact() {
                   <div className="flex items-center mb-4">
                     <div className="flex text-yellow-400">
                       {[...Array(5)].map((_, i) => (
-                        <i key={i} className="lni lni-star-fat"></i>
+                        <svg key={i} className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
                       ))}
                     </div>
                     <span className="ml-2 text-xs font-medium text-gray-600">5.0 out of 5</span>
@@ -263,7 +363,9 @@ export default function Contact() {
                   </blockquote>
                   <div className="flex items-center">
                     <div className="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center">
-                      <i className="lni lni-user-1 text-3xl text-gray-600"></i>
+                      <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
                     </div>
                     <div className="ml-4">
                       <div className="font-semibold text-sm text-gray-900">Sarah Mitchell</div>
@@ -279,7 +381,9 @@ export default function Contact() {
                   <div className="space-y-6">
                     <div className="flex items-start">
                       <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
-                        <i className="lni lni-envelope-2 text-2xl text-[#1e40af]"></i>
+                        <svg className="w-6 h-6 text-[#1e40af]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
                       </div>
                       <div>
                         <h4 className="font-semibold text-gray-900">Email</h4>
@@ -292,7 +396,9 @@ export default function Contact() {
 
                     <div className="flex items-start">
                       <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
-                        <i className="lni lni-headphone-1-mic text-2xl text-[#1e40af]"></i>
+                        <svg className="w-6 h-6 text-[#1e40af]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
                       </div>
                       <div>
                         <h4 className="font-semibold text-gray-900">Phone</h4>
@@ -305,7 +411,10 @@ export default function Contact() {
 
                     <div className="flex items-start">
                       <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
-                        <i className="lni lni-map-marker-7 text-2xl text-[#1e40af]"></i>
+                        <svg className="w-6 h-6 text-[#1e40af]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
                       </div>
                       <div>
                         <h4 className="font-semibold text-gray-900">Location</h4>
@@ -318,7 +427,9 @@ export default function Contact() {
                 {/* Support for Existing Customers */}
                 <div className="border-l-4 border-[#1e40af] bg-blue-50 p-6 rounded-r-lg">
                   <h4 className="font-semibold text-gray-900 mb-2">
-                    <i className="lni lni-headphone-1-mic mr-2 text-2xl text-[#1e40af]"></i>
+                    <svg className="inline w-5 h-5 mr-2 text-[#1e40af]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
                     Existing Customer?
                   </h4>
                   <p className="text-gray-700 mb-3">
@@ -334,10 +445,21 @@ export default function Contact() {
         </section>
 
         {/* What to Expect */}
-            <div className="grid md:grid-cols-3 gap-8 mb-12">
+        <section className="bg-gray-50 py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">What to Expect from Your Demo</h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                See how Assure can transform your compliance operations
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-3 gap-8">
               <div className="text-center">
                 <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <i className="lni lni-timer-1 text-3xl text-[#1e40af]"></i>
+                  <svg className="w-8 h-8 text-[#1e40af]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">30-minute demo</h3>
                 <p className="text-gray-600">
@@ -346,16 +468,20 @@ export default function Contact() {
               </div>
               <div className="text-center">
                 <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <i className="lni lni-person-chalkboard text-3xl text-[#1e40af]"></i>
+                  <svg className="w-8 h-8 text-[#1e40af]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Expert guidance</h3>
                 <p className="text-gray-600">
-                  Consult with compliance specialists who have a deep understanding of Australian gaming regulations.
+                  Consult with compliance specialists who have a deep understanding of Australian gaming regulations
                 </p>
               </div>
               <div className="text-center">
                 <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <i className="lni lni-rocket-6 text-3xl text-[#1e40af]"></i>
+                  <svg className="w-8 h-8 text-[#1e40af]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Live platform tour</h3>
                 <p className="text-gray-600">
