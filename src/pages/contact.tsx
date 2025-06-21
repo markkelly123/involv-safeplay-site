@@ -15,18 +15,17 @@ export default function Contact() {
     jobTitle: '',
     phone: '',
     venueType: '',
+    inquiryType: '',
     currentChallenge: '',
     message: ''
   })
   
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
-  const [submitError, setSubmitError] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    setSubmitError(false)
     
     try {
       const form = e.target as HTMLFormElement
@@ -42,47 +41,49 @@ export default function Contact() {
 
       if (response.ok) {
         setIsSubmitted(true)
-        setFormData({
-          firstName: '',
-          lastName: '',
-          email: '',
-          company: '',
-          jobTitle: '',
-          phone: '',
-          venueType: '',
-          currentChallenge: '',
-          message: ''
-        })
         
-        // Reset success message after 5 seconds
+        // Reset form after 5 seconds
         setTimeout(() => {
           setIsSubmitted(false)
+          setFormData({
+            firstName: '',
+            lastName: '',
+            email: '',
+            company: '',
+            jobTitle: '',
+            phone: '',
+            venueType: '',
+            inquiryType: '',
+            currentChallenge: '',
+            message: ''
+          })
         }, 5000)
       } else {
         const data = await response.json()
         console.error('Form submission failed:', data)
-        setSubmitError(true)
+        alert('There was an error sending your message. Please try again or contact us directly.')
       }
     } catch (error) {
       console.error('Error submitting form:', error)
-      setSubmitError(true)
+      alert('There was an error sending your message. Please try again or contact us directly.')
     } finally {
       setIsSubmitting(false)
     }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
   }
 
   return (
     <>
       <Head>
         <title>Contact Sales - Schedule Your Assure Demo</title>
-        <meta name="description" content="Get a personalised demo of Involv's Assure GRC platform. Speak with our experts about AML, risk management, and regulatory compliance for Australian pubs and clubs." />
+        <meta name="description" content="Get a personalised demo of Involv&apos;s Assure GRC platform. Speak with our experts about AML, risk management, and regulatory compliance for Australian pubs and clubs." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* Favicon */}
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -98,12 +99,12 @@ export default function Contact() {
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-blue-50 to-white py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
+            <div className="text-center mb-2">
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
                 Ready to streamline your risk & compliance?
               </h1>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Get a personalised demo of Assure or reach out to schedule a call.
+                Get a personalised demo of Assure or reach out with any questions about governance, risk & compliance.
               </p>
             </div>
           </div>
@@ -117,230 +118,251 @@ export default function Contact() {
               <div>
                 <div className="bg-gray-50 rounded-2xl p-8 border border-gray-200">
                   {/* Success Message */}
-                  {isSubmitted && (
-                    <div className="mb-8 p-6 bg-green-50 border border-green-200 rounded-lg">
-                      <div className="flex items-center">
-                        <svg className="w-6 h-6 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {isSubmitted ? (
+                    <div className="text-center py-12">
+                      <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                         </svg>
+                      </div>
+                      <h3 className="text-xl font-semibold text-gray-900 mb-2">Message Sent Successfully!</h3>
+                      <p className="text-gray-600">
+                        Thank you for contacting us. We&apos;ll respond within the next business day.
+                      </p>
+                    </div>
+                  ) : (
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                      {/* Hidden fields for Formspree */}
+                      <input type="hidden" name="_subject" value={`Assure Contact Form - ${formData.inquiryType || 'General Inquiry'}`} />
+                      <input type="hidden" name="_next" value={typeof window !== 'undefined' ? window.location.href : ''} />
+                      <input type="hidden" name="_cc" value="mark.kelly@involv.com.au" />
+                      <input type="hidden" name="site" value="Assure" />
+                      <input type="hidden" name="form_type" value="Contact Form" />
+                      
+                      {/* Inquiry Type */}
+                      <div>
+                        <label htmlFor="inquiryType" className="block text-sm font-medium text-gray-700 mb-2">
+                          How can we help you? *
+                        </label>
+                        <select
+                          id="inquiryType"
+                          name="inquiryType"
+                          required
+                          value={formData.inquiryType}
+                          onChange={handleChange}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
+                        >
+                          <option value="">Select inquiry type</option>
+                          <option value="Schedule a Demo">Schedule a Demo</option>
+                          <option value="General Enquiry">General Enquiry</option>
+                        </select>
+                      </div>
+
+                      {/* Name Fields */}
+                      <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                          <h3 className="text-lg font-semibold text-green-800 mb-1">Thank you for your interest.</h3>
-                          <p className="text-green-700 text-sm">We've received your demo request and will be in touch within 24 hours to schedule your personalised Assure demonstration.</p>
+                          <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
+                            First Name *
+                          </label>
+                          <input
+                            type="text"
+                            id="firstName"
+                            name="firstName"
+                            required
+                            value={formData.firstName}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
+                            placeholder="Your first name"
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
+                            Last Name *
+                          </label>
+                          <input
+                            type="text"
+                            id="lastName"
+                            name="lastName"
+                            required
+                            value={formData.lastName}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
+                            placeholder="Your last name"
+                          />
                         </div>
                       </div>
-                    </div>
-                  )}
 
-                  {/* Error Message */}
-                  {submitError && (
-                    <div className="mb-8 p-6 bg-red-50 border border-red-200 rounded-lg">
-                      <div className="flex items-center">
-                        <div className="w-6 h-6 text-red-600 mr-3">⚠</div>
+                      {/* Business Email */}
+                      <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                          Business Email *
+                        </label>
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          required
+                          value={formData.email}
+                          onChange={handleChange}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
+                          placeholder="your.email@company.com.au"
+                        />
+                      </div>
+
+                      {/* Company & Job Title */}
+                      <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                          <h3 className="text-lg font-semibold text-red-800 mb-1">Something went wrong</h3>
-                          <p className="text-red-700 text-sm">Please try again or contact us directly at hello@involv.com.au</p>
+                          <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">
+                            Company *
+                          </label>
+                          <input
+                            type="text"
+                            id="company"
+                            name="company"
+                            required
+                            value={formData.company}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
+                            placeholder="Your venue or company name"
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor="jobTitle" className="block text-sm font-medium text-gray-700 mb-2">
+                            Job Title
+                          </label>
+                          <input
+                            type="text"
+                            id="jobTitle"
+                            name="jobTitle"
+                            value={formData.jobTitle}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
+                            placeholder="Your role or position"
+                          />
                         </div>
                       </div>
-                    </div>
-                  )}
-                  
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    {/* Hidden fields for Formspree */}
-                    <input type="hidden" name="_subject" value="Assure Demo Request - New Lead" />
-                    <input type="hidden" name="_next" value={typeof window !== 'undefined' ? window.location.href : ''} />
-                    <input type="hidden" name="_cc" value="hello@involv.com.au" />
-                    <input type="hidden" name="site" value="Assure" />
-                    <input type="hidden" name="form_type" value="Demo Request" />
-                    <input type="hidden" name="_template" value="table" />
-                    
-                    {/* Name Fields */}
-                    <div className="grid md:grid-cols-2 gap-4">
+
+                      {/* Phone */}
                       <div>
-                        <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
-                          First Name *
+                        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                          Phone Number
                         </label>
                         <input
-                          type="text"
-                          id="firstName"
-                          name="firstName"
-                          required
-                          value={formData.firstName}
+                          type="tel"
+                          id="phone"
+                          name="phone"
+                          value={formData.phone}
                           onChange={handleChange}
                           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
-                          placeholder="Your first name"
+                          placeholder="04XX XXX XXX"
                         />
                       </div>
+
+                      {/* Venue Type */}
                       <div>
-                        <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
-                          Last Name *
+                        <label htmlFor="venueType" className="block text-sm font-medium text-gray-700 mb-2">
+                          Venue Type
                         </label>
-                        <input
-                          type="text"
-                          id="lastName"
-                          name="lastName"
-                          required
-                          value={formData.lastName}
+                        <select
+                          id="venueType"
+                          name="venueType"
+                          value={formData.venueType}
                           onChange={handleChange}
                           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
-                          placeholder="Your last name"
-                        />
+                        >
+                          <option value="">Select venue type</option>
+                          <option value="club">Club</option>
+                          <option value="hotel">Hotel</option>
+                          <option value="casino">Casino</option>
+                          <option value="multiple">Multi-venue</option>
+                          <option value="other">Other</option>
+                        </select>
                       </div>
-                    </div>
 
-                    {/* Business Email */}
-                    <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                        Business Email *
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        required
-                        value={formData.email}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
-                        placeholder="your.email@company.com.au"
-                      />
-                    </div>
-
-                    {/* Company & Job Title */}
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div>
-                        <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">
-                          Company *
-                        </label>
-                        <input
-                          type="text"
-                          id="company"
-                          name="company"
-                          required
-                          value={formData.company}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
-                          placeholder="Your venue or company name"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="jobTitle" className="block text-sm font-medium text-gray-700 mb-2">
-                          Job Title
-                        </label>
-                        <input
-                          type="text"
-                          id="jobTitle"
-                          name="jobTitle"
-                          value={formData.jobTitle}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
-                          placeholder="Your role or position"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Phone */}
-                    <div>
-                      <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                        Phone Number
-                      </label>
-                      <input
-                        type="tel"
-                        id="phone"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
-                        placeholder="04XX XXX XXX"
-                      />
-                    </div>
-
-                    {/* Venue Type */}
-                    <div>
-                      <label htmlFor="venueType" className="block text-sm font-medium text-gray-700 mb-2">
-                        Venue Type *
-                      </label>
-                      <select
-                        id="venueType"
-                        name="venueType"
-                        required
-                        value={formData.venueType}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
-                      >
-                        <option value="">Select venue type</option>
-                        <option value="club">Club</option>
-                        <option value="hotel">Hotel</option>
-                        <option value="casino">Casino</option>
-                        <option value="multiple">Multi-venue</option>
-                        <option value="other">Other</option>
-                      </select>
-                    </div>
-
-                    {/* Current Challenge */}
-                    <div>
-                      <label htmlFor="currentChallenge" className="block text-sm font-medium text-gray-700 mb-2">
-                        Primary Risk & Compliance Challenge
-                      </label>
-                      <select
-                        id="currentChallenge"
-                        name="currentChallenge"
-                        value={formData.currentChallenge}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
-                      >
-                        <option value="">Select primary challenge</option>
-                        <option value="aml">AML/CTF Compliance</option>
-                        <option value="obligations">Obligation Mapping and Controls</option>
-                        <option value="regulatory">Regulatory Compliance</option>
-                        <option value="risk">Risk Management</option>
-                        <option value="reporting">Regulatory Reporting</option>
-                        <option value="training">Staff Training & Management</option>
-                        <option value="audits">Audit Preparation</option>
-                        <option value="multiple">Multiple areas</option>
-                      </select>
-                    </div>
-
-                    {/* Message */}
-                    <div>
-                      <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                        Tell us about your compliance needs
-                      </label>
-                      <textarea
-                        id="message"
-                        name="message"
-                        rows={4}
-                        value={formData.message}
-                        onChange={handleChange}
-                        placeholder="What specific governance, risk & compliance challenges are you facing? What would you like to see in the demo?"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
-                      />
-                    </div>
-
-                    {/* Submit Button */}
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full bg-[#1e40af] text-white py-4 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <svg className="w-5 h-5 mr-2 animate-spin" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-                          </svg>
-                          Submitting...
-                        </>
-                      ) : (
-                        'Submit Demo Request'
+                      {/* Current Challenge - Only show for demo requests */}
+                      {formData.inquiryType === 'Schedule a Demo' && (
+                        <div>
+                          <label htmlFor="currentChallenge" className="block text-sm font-medium text-gray-700 mb-2">
+                            Primary Risk & Compliance Challenge
+                          </label>
+                          <select
+                            id="currentChallenge"
+                            name="currentChallenge"
+                            value={formData.currentChallenge}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
+                          >
+                            <option value="">Select primary challenge</option>
+                            <option value="aml">AML/CTF Compliance</option>
+                            <option value="obligations">Obligation Mapping and Controls</option>
+                            <option value="regulatory">Regulatory Compliance</option>
+                            <option value="risk">Risk Management</option>
+                            <option value="reporting">Regulatory Reporting</option>
+                            <option value="training">Staff Training & Management</option>
+                            <option value="audits">Audit Preparation</option>
+                            <option value="multiple">Multiple areas</option>
+                          </select>
+                        </div>
                       )}
-                    </button>
 
-                    <p className="text-sm text-gray-600 text-center">
-                      By submitting this form, you agree to our{' '}
-                      <Link href="/privacy-policy" className="text-[#1e40af] hover:text-blue-700 underline">
-                        Privacy Policy
-                      </Link>
-                    </p>
-                  </form>
+                      {/* Message */}
+                      <div>
+                        <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                          {formData.inquiryType === 'Schedule a Demo' 
+                            ? "Tell us about your compliance needs" 
+                            : "Your message *"
+                          }
+                        </label>
+                        <textarea
+                          id="message"
+                          name="message"
+                          rows={4}
+                          required={formData.inquiryType !== 'Schedule a Demo'}
+                          value={formData.message}
+                          onChange={handleChange}
+                          placeholder={
+                            formData.inquiryType === 'Schedule a Demo'
+                              ? "What specific governance, risk & compliance challenges are you facing? What would you like to see in the demo?"
+                              : "Please provide details about your inquiry..."
+                          }
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
+                        />
+                      </div>
+
+                      {/* Submit Button */}
+                      <div className="flex items-center justify-between pt-4">
+                        <p className="text-sm text-gray-500">
+                          * Required fields
+                        </p>
+                        <button
+                          type="submit"
+                          disabled={isSubmitting}
+                          className="bg-[#1e40af] text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 flex items-center"
+                        >
+                          {isSubmitting ? (
+                            <>
+                              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                              Sending...
+                            </>
+                          ) : (
+                            <>
+                              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                              </svg>
+                              Send Message
+                            </>
+                          )}
+                        </button>
+                      </div>
+
+                      <p className="text-sm text-gray-500 text-center">
+                        By submitting this form, you agree to our{' '}
+                        <Link href="/privacy-policy" className="text-[#1e40af] hover:text-blue-700 underline">
+                          Privacy Policy
+                        </Link>
+                      </p>
+                    </form>
+                  )}
                 </div>
               </div>
 
@@ -359,7 +381,7 @@ export default function Contact() {
                     <span className="ml-2 text-xs font-medium text-gray-600">5.0 out of 5</span>
                   </div>
                   <blockquote className="text-sm text-gray-700 mb-6">
-                    "Assure mapped all our obligations and transformed our compliance operations. We've reduced our compliance workload by about 60% and, for the first time, we've gained complete visibility into our risk profile. The team at Involv really understands what Clubs need to do to meet their regulatory obligations."
+                    "Assure mapped all our obligations and transformed our compliance operations. We&apos;ve reduced our compliance workload by about 60% and, for the first time, we&apos;ve gained complete visibility into our risk profile. The team at Involv really understands what Clubs need to do to meet their regulatory obligations."
                   </blockquote>
                   <div className="flex items-center">
                     <div className="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center">
@@ -380,7 +402,7 @@ export default function Contact() {
                   
                   <div className="space-y-6">
                     <div className="flex items-start">
-                      <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                      <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
                         <svg className="w-6 h-6 text-[#1e40af]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
@@ -395,7 +417,7 @@ export default function Contact() {
                     </div>
 
                     <div className="flex items-start">
-                      <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                      <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
                         <svg className="w-6 h-6 text-[#1e40af]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                         </svg>
@@ -403,14 +425,14 @@ export default function Contact() {
                       <div>
                         <h4 className="font-semibold text-gray-900">Phone</h4>
                         <p className="text-gray-600">Speak with our team directly</p>
-                        <a href="tel:+61390000000" className="text-[#1e40af] hover:text-blue-700 font-medium">
-                          1300 000 000
+                        <a href="tel:1300XXXXXX" className="text-[#1e40af] hover:text-blue-700 font-medium">
+                          1300 XXX XXX
                         </a>
                       </div>
                     </div>
 
                     <div className="flex items-start">
-                      <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                      <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
                         <svg className="w-6 h-6 text-[#1e40af]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -421,13 +443,15 @@ export default function Contact() {
                         <p className="text-gray-600">Based in Melbourne, serving Australia-wide</p>
                       </div>
                     </div>
+
+                    
                   </div>
                 </div>
 
                 {/* Support for Existing Customers */}
                 <div className="border-l-4 border-[#1e40af] bg-blue-50 p-6 rounded-r-lg">
-                  <h4 className="font-semibold text-gray-900 mb-2">
-                    <svg className="inline w-5 h-5 mr-2 text-[#1e40af]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <h4 className="font-semibold text-gray-900 mb-2 flex items-center">
+                    <svg className="w-5 h-5 mr-2 text-[#1e40af]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
                     </svg>
                     Existing Customer?
@@ -448,9 +472,9 @@ export default function Contact() {
         <section className="bg-gray-50 py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">What to Expect from Your Demo</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">What to Expect</h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                See how Assure can transform your compliance operations
+                How we&apos;ll help you streamline your compliance operations
               </p>
             </div>
             
@@ -461,9 +485,9 @@ export default function Contact() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">30-minute demo</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Quick Response</h3>
                 <p className="text-gray-600">
-                  Tailored to your venue's specific compliance needs and challenges
+                  We&apos;ll contact you within 24-48 hours to address your enquiry
                 </p>
               </div>
               <div className="text-center">
@@ -472,9 +496,9 @@ export default function Contact() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Expert guidance</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Personalised Approach</h3>
                 <p className="text-gray-600">
-                  Consult with compliance specialists who have a deep understanding of Australian gaming regulations
+                  Tailored discussion or demo based on your venue&apos;s specific compliance needs
                 </p>
               </div>
               <div className="text-center">
@@ -483,9 +507,9 @@ export default function Contact() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Live platform tour</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Strategic Discussion</h3>
                 <p className="text-gray-600">
-                  See real AML monitoring, risk assessments, and reporting in action
+                  Explore how Assure can transform your compliance operations
                 </p>
               </div>
             </div>
