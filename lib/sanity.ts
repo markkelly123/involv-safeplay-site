@@ -203,7 +203,15 @@ export async function getPost(slug: string): Promise<Post | null> {
       featured,
       mainImage{asset->{_id, url}, alt},
       postType,
-      estimatedReadingTime
+      estimatedReadingTime,
+      
+      // NEW: Enhanced whitepaper/report fields
+      downloadUrl,
+      fileSize,
+      fileFormat,
+      pageCount,
+      requiresRegistration,
+      downloadCount
     }
   `
   
