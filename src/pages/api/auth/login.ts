@@ -6,7 +6,7 @@ import { serialize } from 'cookie'
 
 // Obfuscated user credentials (Base64 encoded)
 // This contains: {"timbarnett@directpointadvisory.com.au":"InvolvFounder2025!","louise@laneconsultingandadvisory.com":"Compliance2025!","mark.kelly@involv.com.au":"YourSecurePass2025!","gareth.thomas@trefor.com.au":"TreforAccess1-2025!","phil.dreaver@trefor.com.au":"TreforAccess2-2025!"}
-const OBFUSCATED_USERS = 'eyJ0aW1iYXJuZXR0QGRpcmVjdHBvaW50YWR2aXNvcnkuY29tLmF1IjoiSW52b2x2Rm91bmRlcjIwMjUhIiwibG91aXNlQGxhbmVjb25zdWx0aW5nYW5kYWR2aXNvcnkuY29tIjoiQ29tcGxpYW5jZTIwMjUhIiwibWFyay5rZWxseUBpbnZvbHYuY29tLmF1IjoiWW91clNlY3VyZVBhc3MyMDI1ISIsImdhcmV0aC50aG9tYXNAdHJlZm9yLmNvbS5hdSI6IlRyZWZvckFjY2VzczEtMjAyNSEiLCJwaGlsLmRyZWF2ZXJAdHJlZm9yLmNvbS5hdSI6IlRyZWZvckFjY2VzczItMjAyNSEifQ=='
+const OBFUSCATED_USERS = 'eyJ0aW1iYXJuZXR0QGRpcmVjdHBvaW50YWR2aXNvcnkuY29tLmF1IjoiSW52b2x2Rm91bmRlcjIwMjUhIiwibG91aXNlQGxhbmVjb25zdWx0aW5nYW5kYWR2aXNvcnkuY29tIjoiQ29tcGxpYW5jZTIwMjUhIiwibWFyay5rZWxseUBpbnZvbHYuY29tLmF1IjoiWW91clNlY3VyZVBhc3MyMDI1ISIsImdhcmV0aC50aG9tYXNAdHJlZm9yLmNvbS5hdSI6IlRyZWZvckFjY2VzczEtMjAyNSEiLCJwaGlsLmRyZWF2ZXJAdHJlZm9yLmNvbS5hdSI6IlRyZWZvckFjY2VzczItMjAyNSEiLCJwb3RlbnRpYWxAaW52ZXN0b3IuY29tIjoiSW52ZXN0b3JQaXRjaERlY2syMDI1ISJ9'
 
 // Function to decode authorized users
 const getAuthorizedUsers = (): Record<string, string> => {
