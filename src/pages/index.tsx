@@ -479,4 +479,4 @@ const keyBenefits = [
     outcome: 'Enhanced reputation',
     icon: <Heart className="w-8 h-8 text-inverted" />
   }
-]
+]// Force rebuild
