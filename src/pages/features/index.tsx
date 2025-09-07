@@ -1,721 +1,302 @@
+// src/pages/features/index.tsx
 import Link from 'next/link'
-import Image from 'next/image'
-import { GetStaticProps } from 'next'
 import Head from 'next/head'
-import { getPosts } from '../../../lib/sanity'
 import Navigation from '../../components/Navigation'
 import Footer from '../../components/Footer'
 
-interface Post {
-  _id: string
-  title: string
-  slug: { current: string }
-  excerpt?: string
-  publishedAt: string
-  author: {
-    name: string
-    role?: string
-    image?: {
-      asset: {
-        url: string
-      }
-      alt?: string
-    }
-  }
-  mainImage?: {
-    asset: {
-      url: string
-    }
-    alt?: string
-  }
-  categories: Array<{
-    _id: string
-    title: string
-  }>
-  estimatedReadingTime?: number
-}
-
-interface FeaturesPageProps {
-  posts: Post[]
-}
-
-export default function FeaturesPage({ posts }: FeaturesPageProps) {
+export default function FeaturesPage() {
   return (
     <>
       <Head>
-        <title>Features - Assure GRC Platform | AML & Gaming Compliance</title>
-        <meta name="description" content="Explore Assure&apos;s comprehensive features: AML compliance, risk management, regulatory reporting, team management, real-time monitoring, and custom workflows for Australian gaming venues." />
-        <meta name="keywords" content="AML compliance features, gaming compliance tools, risk management software, regulatory reporting, AUSTRAC compliance, gaming venue compliance, EGM compliance features" />
+        <title>Features – SafePlay | Safer Gambling Intelligence for EGMs</title>
+        <meta
+          name="description"
+          content="SafePlay provides real-time safer-gambling intelligence for pubs & clubs: RGO support, live alerts (carded & uncarded), configurable thresholds, incident capture, and regulator-aligned reporting."
+        />
+        <meta
+          name="keywords"
+          content="safer gambling software, RGO support, responsible gambling, PlayTrax, real-time alerts, carded and uncarded monitoring, gaming venues, pubs, clubs"
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {/* Favicon */}
+        {/* Favicons */}
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
         {/* Open Graph */}
-        <meta property="og:title" content="Features - Assure GRC Platform | AML & Gaming Compliance" />
-        <meta property="og:description" content="Comprehensive GRC features built specifically for Australian pubs and clubs operating EGMs. AML compliance, risk management, and regulatory reporting made simple." />
+        <meta property="og:title" content="SafePlay – Safer Gambling Intelligence" />
+        <meta
+          property="og:description"
+          content="Live, configurable alerts and evidence-ready workflows that help RGOs identify and assist at-risk players in real time."
+        />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://assure.involv.com.au/features" />
+        <meta property="og:url" content="https://safeplay.involv.com.au/features" />
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Features - Assure GRC Platform" />
-        <meta name="twitter:description" content="Comprehensive GRC features built specifically for Australian gaming venues." />
+        <meta name="twitter:title" content="SafePlay – Safer Gambling Intelligence" />
+        <meta
+          name="twitter:description"
+          content="RGO-assist, carded & uncarded detection, incident capture, and regulator-aligned reporting for pubs & clubs."
+        />
       </Head>
 
       <div className="min-h-screen bg-white">
-        {/* Navigation Component */}
         <Navigation />
 
-        {/* Hero Section */}
-        <section className="bg-gradient-to-br from-blue-50 to-white py-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center">
-              <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-8 leading-tight">
-                Your compliance, <br/>
-                <span className="text-[#1e40af]">perfected.</span>
-              </h1>
-              <p className="text-2xl text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed">
-                The only GRC platform purposely built for Australian pubs and clubs. Build a culture of compliance 
-                and stay focused on what matters - running your venue.
+        {/* Hero */}
+        <section className="bg-gradient-to-br from-[#F2F6FB] to-white py-24">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+              Safer gambling, <span className="text-[#1E4D8F]">in real time.</span>
+            </h1>
+            <p className="text-2xl text-gray-600 mb-10 max-w-4xl mx-auto leading-relaxed">
+              SafePlay gives RGOs and managers live, evidence-based insights on
+              gaming floor behaviour—so you can identify risk earlier, act sooner, and document everything.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Link
+                href="/contact"
+                className="bg-[#1E4D8F] text-white px-10 py-5 rounded-xl font-semibold hover:bg-[#163B6D] transition-colors text-lg"
+              >
+                Book a walkthrough
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Section: Built for RGOs & Duty Managers */}
+        <section className="py-28">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                Built for RGOs and duty managers.
+              </h2>
+              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                The RGO role is proactive. SafePlay helps you spot minimally visible signs of escalating behaviour,
+                even during peak periods. It continuously monitors play patterns and flags anomalies for both{' '}
+                <strong>carded and uncarded</strong> players - so nothing critical slips past.
               </p>
-              <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                <Link 
-                  href="/contact" 
-                  className="bg-[#1e40af] text-white px-10 py-5 rounded-xl font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center text-lg"
-                >
-                  <i className="lni lni-rocket-6 mr-3"></i>
-                  Schedule a Trial
-                </Link>
-                <Link 
-                  href="/demo" 
-                  className="border border-gray-300 text-gray-700 px-10 py-5 rounded-xl font-semibold hover:bg-gray-50 transition-colors flex items-center justify-center text-lg"
-                >
-                  <i className="lni lni-play mr-3"></i>
-                  See Assure In Action
-                </Link>
+              <ul className="space-y-5">
+                <li className="flex">
+                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mt-1">
+                    <i className="lni lni-check text-green-600 text-sm"></i>
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-lg font-semibold text-gray-900">Live floor intelligence</h3>
+                    <p className="text-gray-600">
+                      Session time, funds-in and loss % combine into risk signals that update as play evolves.
+                    </p>
+                  </div>
+                </li>
+                <li className="flex">
+                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mt-1">
+                    <i className="lni lni-check text-green-600 text-sm"></i>
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-lg font-semibold text-gray-900">Configurable thresholds</h3>
+                    <p className="text-gray-600">
+                      Tune alert levels (amber/red), recipients, and schedules to your venue’s profile and patron mix.
+                    </p>
+                  </div>
+                </li>
+                <li className="flex">
+                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mt-1">
+                    <i className="lni lni-check text-green-600 text-sm"></i>
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-lg font-semibold text-gray-900">Multi-channel notifications</h3>
+                    <p className="text-gray-600">
+                      Deliver alerts via web, SMS, email, or existing paging - so the right person acts fast.
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            {/* Visual card – Live Alerts */}
+            <div className="relative">
+              <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100">
+                <div className="bg-gray-50 px-6 py-4 border-b border-gray-200">
+                  <div className="flex items-center">
+                    <div className="w-3 h-3 bg-red-400 rounded-full"></div>
+                    <div className="w-3 h-3 bg-yellow-400 rounded-full ml-2"></div>
+                    <div className="w-3 h-3 bg-green-400 rounded-full ml-2"></div>
+                    <div className="ml-4 text-sm text-gray-600">SafePlay – Live Alerts</div>
+                  </div>
+                </div>
+                <div className="p-8">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-6">Active risk signals</h3>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between p-4 bg-red-50 border border-red-200 rounded-lg">
+                      <div>
+                        <div className="font-medium text-gray-900">Prolonged session (uncarded)</div>
+                        <div className="text-sm text-gray-600">Time on device exceeds venue threshold</div>
+                      </div>
+                      <span className="px-3 py-1 bg-red-100 text-red-800 text-sm rounded-full">Action now</span>
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                      <div>
+                        <div className="font-medium text-gray-900">Loss % spike (carded)</div>
+                        <div className="text-sm text-gray-600">One-off loss % over limit this session</div>
+                      </div>
+                      <span className="px-3 py-1 bg-yellow-100 text-yellow-800 text-sm rounded-full">Monitor</span>
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                      <div>
+                        <div className="font-medium text-gray-900">Accumulated time (multi-machines)</div>
+                        <div className="text-sm text-gray-600">Cross-device time threshold reached</div>
+                      </div>
+                      <span className="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">Check-in</span>
+                    </div>
+                  </div>
+                </div>
               </div>
+              <div className="absolute -bottom-4 -right-4 w-32 h-24 bg-[#1E4D8F] rounded-lg opacity-10"></div>
+              <div className="absolute -top-4 -left-4 w-24 h-32 bg-green-500 rounded-lg opacity-10"></div>
             </div>
           </div>
         </section>
 
-        {/* Feature 1: Know Your Obligations */}
-        <section className="py-32">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
-              <div>
-                <h2 className="text-5xl font-bold text-gray-900 mb-8 leading-tight">
-                  Know exactly what you need to do, when.
-                </h2>
-                <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                  Pre-loaded with every compliance requirement for Australian pubs and clubs. 
-                  No more guessing, no more missing deadlines, no more surprises.
-                </p>
-                <div className="space-y-6">
-                  <div className="flex items-start">
-                    <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mt-1">
-                      <i className="lni lni-check text-green-600 text-sm"></i>
+        {/* Section: How SafePlay works */}
+        <section className="py-28 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-16 items-center">
+            {/* Visual – Signal model */}
+            <div className="order-2 lg:order-1">
+              <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 p-8">
+                <h3 className="text-lg font-semibold text-gray-900 mb-6">Signals we combine</h3>
+                <ul className="space-y-4">
+                  <li className="flex items-start">
+                    <i className="lni lni-signal text-[#1E4D8F] text-xl mr-3"></i>
+                    <div>
+                      <div className="font-medium text-gray-900">Time on device (carded & uncarded)</div>
+                      <div className="text-sm text-gray-600">Continuous and accumulated time across machines.</div>
                     </div>
-                    <div className="ml-4">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">State-specific requirements built in</h3>
-                      <p className="text-gray-600">From NSW to TAS - we know every jurisdiction&apos;s rules</p>
+                  </li>
+                  <li className="flex items-start">
+                    <i className="lni lni-signal text-[#1E4D8F] text-xl mr-3"></i>
+                    <div>
+                      <div className="font-medium text-gray-900">Funds-in / velocity</div>
+                      <div className="text-sm text-gray-600">Shift-aware patterns that indicate escalation.</div>
                     </div>
-                  </div>
-                  <div className="flex items-start">
-                    <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mt-1">
-                      <i className="lni lni-check text-green-600 text-sm"></i>
+                  </li>
+                  <li className="flex items-start">
+                    <i className="lni lni-signal text-[#1E4D8F] text-xl mr-3"></i>
+                    <div>
+                      <div className="font-medium text-gray-900">Loss percentage (one-off & trend)</div>
+                      <div className="text-sm text-gray-600">Contextual thresholds to reduce false positives.</div>
                     </div>
-                    <div className="ml-4">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Automatic updates when laws change</h3>
-                      <p className="text-gray-600">Stay current without checking regulator websites daily</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start">
-                    <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mt-1">
-                      <i className="lni lni-check text-green-600 text-sm"></i>
-                    </div>
-                    <div className="ml-4">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Clear ownership and deadlines</h3>
-                      <p className="text-gray-600">Everyone knows what they&apos;re responsible for</p>
-                    </div>
-                  </div>
+                  </li>
+                </ul>
+                <div className="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-900">
+                  Works independently of gaming system carding; supports uncarded monitoring to close common blind spots.
                 </div>
               </div>
-              
-              <div className="relative">
-                {/* Placeholder for Obligations Register Screenshot */}
-                <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100">
-                  <div className="bg-gray-50 px-6 py-4 border-b border-gray-200">
-                    <div className="flex items-center">
-                      <div className="w-3 h-3 bg-red-400 rounded-full"></div>
-                      <div className="w-3 h-3 bg-yellow-400 rounded-full ml-2"></div>
-                      <div className="w-3 h-3 bg-green-400 rounded-full ml-2"></div>
-                      <div className="ml-4 text-sm text-gray-600">Assure - Obligations Register</div>
-                    </div>
+            </div>
+
+            <div className="order-1 lg:order-2">
+              <h2 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                Data-led alerts, human-centred conversations.
+              </h2>
+              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                SafePlay augments trained RGOs—not replaces them. It surfaces risk early and provides guidance so staff
+                can approach patrons respectfully, avoid embarrassment, and document interactions professionally.
+              </p>
+              <ul className="space-y-5">
+                <li className="flex">
+                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mt-1">
+                    <i className="lni lni-check text-green-600 text-sm"></i>
                   </div>
-                  <div className="p-8">
-                    <div className="mb-6">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-4">Upcoming Obligations</h3>
-                      <div className="space-y-4">
-                        <div className="flex items-center justify-between p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                          <div>
-                            <div className="font-medium text-gray-900">AML Program Review</div>
-                            <div className="text-sm text-gray-600">Due: 15 March 2025</div>
-                          </div>
-                          <span className="px-3 py-1 bg-yellow-100 text-yellow-800 text-sm rounded-full">Due Soon</span>
-                        </div>
-                        <div className="flex items-center justify-between p-4 bg-green-50 border border-green-200 rounded-lg">
-                          <div>
-                            <div className="font-medium text-gray-900">RSA Training Renewal</div>
-                            <div className="text-sm text-gray-600">Due: 30 April 2025</div>
-                          </div>
-                          <span className="px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full">On Track</span>
-                        </div>
-                        <div className="flex items-center justify-between p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                          <div>
-                            <div className="font-medium text-gray-900">Signage Audit</div>
-                            <div className="text-sm text-gray-600">Due: 10 June 2025</div>
-                          </div>
-                          <span className="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">Scheduled</span>
-                        </div>
-                      </div>
-                    </div>
+                  <div className="ml-4">
+                    <h3 className="text-lg font-semibold text-gray-900">Escalation pathways</h3>
+                    <p className="text-gray-600">Amber → Red with evidence prompts and next-step guidance.</p>
                   </div>
-                </div>
-                <div className="absolute -bottom-4 -right-4 w-32 h-24 bg-[#1e40af] rounded-lg opacity-10"></div>
-                <div className="absolute -top-4 -left-4 w-24 h-32 bg-green-500 rounded-lg opacity-10"></div>
-              </div>
+                </li>
+                <li className="flex">
+                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mt-1">
+                    <i className="lni lni-check text-green-600 text-sm"></i>
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-lg font-semibold text-gray-900">Incident capture</h3>
+                    <p className="text-gray-600">Notes and outcomes flow straight into shift reports.</p>
+                  </div>
+                </li>
+                <li className="flex">
+                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mt-1">
+                    <i className="lni lni-check text-green-600 text-sm"></i>
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-lg font-semibold text-gray-900">No native app dependency</h3>
+                    <p className="text-gray-600">Use any modern device via web; notifications via SMS/email/pager.</p>
+                  </div>
+                </li>
+              </ul>
             </div>
           </div>
         </section>
 
-        {/* Feature 2: Risk Management */}
-        <section className="py-32 bg-gray-50">
+        {/* Section: Compliance alignment */}
+        <section className="py-28">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
-              <div className="order-2 lg:order-1 relative">
-                {/* Placeholder for Risk Dashboard Screenshot */}
-                <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100">
-                  <div className="bg-gray-50 px-6 py-4 border-b border-gray-200">
-                    <div className="flex items-center">
-                      <div className="w-3 h-3 bg-red-400 rounded-full"></div>
-                      <div className="w-3 h-3 bg-yellow-400 rounded-full ml-2"></div>
-                      <div className="w-3 h-3 bg-green-400 rounded-full ml-2"></div>
-                      <div className="ml-4 text-sm text-gray-600">Assure - Risk Dashboard</div>
-                    </div>
-                  </div>
-                  <div className="p-8">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-6">Risk Overview</h3>
-                    <div className="grid grid-cols-2 gap-4 mb-8">
-                      <div className="bg-red-50 p-6 rounded-xl text-center">
-                        <div className="text-3xl font-bold text-red-600">3</div>
-                        <div className="text-sm text-red-700 mt-1">High Risk</div>
-                      </div>
-                      <div className="bg-yellow-50 p-6 rounded-xl text-center">
-                        <div className="text-3xl font-bold text-yellow-600">7</div>
-                        <div className="text-sm text-yellow-700 mt-1">Medium Risk</div>
-                      </div>
-                      <div className="bg-green-50 p-6 rounded-xl text-center">
-                        <div className="text-3xl font-bold text-green-600">12</div>
-                        <div className="text-sm text-green-700 mt-1">Low Risk</div>
-                      </div>
-                      <div className="bg-blue-50 p-6 rounded-xl text-center">
-                        <div className="text-3xl font-bold text-blue-600">85%</div>
-                        <div className="text-sm text-blue-700 mt-1">Controlled</div>
-                      </div>
-                    </div>
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm font-medium text-gray-700">AML Controls</span>
-                        <div className="flex items-center">
-                          <div className="w-32 bg-gray-200 rounded-full h-2 mr-3">
-                            <div className="bg-green-500 h-2 rounded-full" style={{width: '90%'}}></div>
-                          </div>
-                          <span className="text-sm text-gray-600">90%</span>
-                        </div>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm font-medium text-gray-700">Gaming Compliance</span>
-                        <div className="flex items-center">
-                          <div className="w-32 bg-gray-200 rounded-full h-2 mr-3">
-                            <div className="bg-green-500 h-2 rounded-full" style={{width: '95%'}}></div>
-                          </div>
-                          <span className="text-sm text-gray-600">95%</span>
-                        </div>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm font-medium text-gray-700">WHS Programs</span>
-                        <div className="flex items-center">
-                          <div className="w-32 bg-gray-200 rounded-full h-2 mr-3">
-                            <div className="bg-yellow-500 h-2 rounded-full" style={{width: '75%'}}></div>
-                          </div>
-                          <span className="text-sm text-gray-600">75%</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="absolute -bottom-6 -left-6 w-32 h-24 bg-purple-500 rounded-lg opacity-10"></div>
-                <div className="absolute -top-6 -right-6 w-24 h-32 bg-yellow-500 rounded-lg opacity-10"></div>
-              </div>
-
-              <div className="order-1 lg:order-2">
-                <h2 className="text-5xl font-bold text-gray-900 mb-8 leading-tight">
-                  Spot problems before they become fines.
-                </h2>
-                <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                  Pre-loaded with the obligations and risks every pub and club faces. Real-time monitoring shows you 
-                  exactly where you stand and what needs attention.
-                </p>
-                <div className="space-y-6">
-                  <div className="flex items-start">
-                    <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mt-1">
-                      <i className="lni lni-check text-green-600 text-sm"></i>
-                    </div>
-                    <div className="ml-4">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Industry-specific risk library</h3>
-                      <p className="text-gray-600">Common pub and club risks already identified and categorised</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start">
-                    <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mt-1">
-                      <i className="lni lni-check text-green-600 text-sm"></i>
-                    </div>
-                    <div className="ml-4">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Automatic risk scoring</h3>
-                      <p className="text-gray-600">Simple ratings help you focus on what matters most</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start">
-                    <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mt-1">
-                      <i className="lni lni-check text-green-600 text-sm"></i>
-                    </div>
-                    <div className="ml-4">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Real-time alerts</h3>
-                      <p className="text-gray-600">Get notified the moment something needs your attention</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Feature 3: Digital Inspections */}
-        <section className="py-32">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
-              <div>
-                <h2 className="text-5xl font-bold text-gray-900 mb-8 leading-tight">
-                  <span className="text-[#1e40af]">RE-WRITE THIS SECTION.</span> Ditch the clipboards. Embrace smart inspections.
-                </h2>
-                <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                  Your staff use tablets to complete inspections anywhere in your venue. 
-                  Issues automatically trigger actions. Everything&apos;s documented for inspectors and auditors.
-                </p>
-                <div className="space-y-6">
-                  <div className="flex items-start">
-                    <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mt-1">
-                      <i className="lni lni-check text-green-600 text-sm"></i>
-                    </div>
-                    <div className="ml-4">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Gaming machine daily checks</h3>
-                      <p className="text-gray-600">All compliance checkslists digitally filed as evidence</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start">
-                    <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mt-1">
-                      <i className="lni lni-check text-green-600 text-sm"></i>
-                    </div>
-                    <div className="ml-4">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Automatic issue escalation</h3>
-                      <p className="text-gray-600">Issues create action items; assign them to the right people</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start">
-                    <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mt-1">
-                      <i className="lni lni-check text-green-600 text-sm"></i>
-                    </div>
-                    <div className="ml-4">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Audit-ready documentation</h3>
-                      <p className="text-gray-600">Complete history of all inspections and corrective actions</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="relative">
-                {/* Placeholder for Mobile Inspection Screenshot */}
-                <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 transform rotate-3 hover:rotate-0 transition-transform duration-300">
-                  <div className="bg-gray-900 px-6 py-4">
-                    <div className="flex items-center justify-center">
-                      <div className="w-20 h-1 bg-gray-700 rounded-full"></div>
-                    </div>
-                  </div>
-                  <div className="p-6">
-                    <div className="flex items-center justify-between mb-6">
-                      <h3 className="text-lg font-semibold text-gray-900">Gaming Floor Opening Check</h3>
-                      <span className="px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full">In Progress</span>
-                    </div>
-                    
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg">
-                        <div className="flex items-center">
-                          <i className="lni lni-check-circle-1 text-green-500 text-xl mr-3"></i>
-                          <span className="text-gray-900">All machines operational</span>
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg">
-                        <div className="flex items-center">
-                          <i className="lni lni-check-circle-1 text-green-500 text-xl mr-3"></i>
-                          <span className="text-gray-900">RG signage visible; brochures stocked</span>
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-center justify-between p-4 bg-yellow-50 rounded-lg">
-                        <div className="flex items-center">
-                          <i className="lni lni-warning text-yellow-500 text-xl mr-3"></i>
-                          <span className="text-gray-900">Lighting needs attention</span>
-                        </div>
-                      </div>
-                      
-                      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                        <div className="flex items-start">
-                          <i className="lni lni-camera text-yellow-600 text-lg mr-3 mt-1"></i>
-                          <div>
-                            <p className="text-sm font-medium text-yellow-800">Photo taken</p>
-                            <p className="text-xs text-yellow-700 mt-1">Maintenance ticket auto-created</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <button className="w-full bg-[#1e40af] text-white py-3 rounded-lg mt-6 font-medium">
-                      Complete Inspection
-                    </button>
-                  </div>
-                </div>
-                <div className="absolute -bottom-8 -right-8 w-24 h-32 bg-blue-500 rounded-lg opacity-10"></div>
-                <div className="absolute -top-8 -left-8 w-32 h-24 bg-green-500 rounded-lg opacity-10"></div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Feature 4: All Connected */}
-        <section className="py-32 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-20">
-              <h2 className="text-5xl font-bold text-gray-900 mb-8 leading-tight">
-                Everything works together. <br/>
-                <span className="text-[#1e40af]">Nothing falls through the cracks.</span>
+            <div className="text-center mb-16">
+              <h2 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                Aligned to evolving responsible gambling requirements.
               </h2>
               <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-                When obligations are due, risks change, or inspections find issues - the right people 
-                get notified automatically. Your compliance system has intelligence.
+                SafePlay supports the shift to proactive harm-minimisation - including dedicated RGOs in NSW for venues
+                above machine-count thresholds - and complements venue policies on signage, incident registers, cash access
+                controls, and self-exclusion workflows.
               </p>
             </div>
 
-            {/* Integration Visual */}
-            <div className="relative max-w-6xl mx-auto">
-              <div className="grid md:grid-cols-3 gap-8">
-                {/* Documents */}
-                <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 text-center">
-                  <div className="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-6">
-                    <i className="lni lni-layers-2 text-3xl text-[#1e40af]"></i>
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Smart Documents</h3>
-                  <p className="text-gray-600">
-                    Policies, procedures, and evidence - all stored securely with version control and automatic updates.
-                  </p>
-                </div>
-
-                {/* Workflows */}
-                <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 text-center md:transform md:scale-110">
-                  <div className="w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-6">
-                    <i className="lni lni-vector-nodes-4 text-3xl text-green-600"></i>
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Auto Workflows</h3>
-                  <p className="text-gray-600">
-                    Issues trigger actions. Tasks get assigned. Deadlines send reminders. Progress gets tracked automatically.
-                  </p>
-                </div>
-
-                {/* Reporting */}
-                <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 text-center">
-                  <div className="w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center mx-auto mb-6">
-                    <i className="lni lni-bar-chart-4 text-3xl text-purple-600"></i>
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Live Reporting</h3>
-                  <p className="text-gray-600">
-                    Board reports, audit trails, and compliance dashboards - always current, always ready.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Industry Specific */}
-        <section className="py-32">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-20">
-              <h2 className="text-5xl font-bold text-gray-900 mb-8 leading-tight">
-                Built for <span className="text-[#1e40af]">your</span> industry.
-              </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                Unlike generic compliance tools, Assure is designed for the demands of pub and club gaming venues. 
-                Every feature is tailored for your specific challenges.
-              </p>
-            </div>
-
-            <div className="grid lg:grid-cols-3 gap-8">
-              {/* AML/CTF */}
-              <div className="bg-white rounded-2xl p-8 border border-gray-100 hover:shadow-lg transition-shadow">
-                <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center mb-6">
-                  <i className="lni lni-shield-1 text-2xl text-red-600"></i>
-                </div>
-                <h3 className="text-2xl font-semibold text-gray-900 mb-4">AML/CTF Compliance</h3>
-                <p className="text-gray-600 mb-6">
-                  AUSTRAC reporting, customer due diligence, and SMRs - all automated for gaming venues.
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="bg-white rounded-2xl p-8 border border-gray-100">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">RGO support</h3>
+                <p className="text-gray-600">
+                  Live alerts and guidance to help RGOs identify, engage and record interactions professionally.
                 </p>
-                <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <i className="lni lni-check text-[#1e40af] text-sm mt-1 mr-2"></i>
-                    <span className="text-sm text-gray-700">Cheque cashing monitoring</span>
-                  </li>
-                  <li className="flex items-start">
-                    <i className="lni lni-check text-[#1e40af] text-sm mt-1 mr-2"></i>
-                    <span className="text-sm text-gray-700">Customer due diligence workflows (SoF, SoW)</span>
-                  </li>
-                  <li className="flex items-start">
-                    <i className="lni lni-check text-[#1e40af] text-sm mt-1 mr-2"></i>
-                    <span className="text-sm text-gray-700">Program review scheduling</span>
-                  </li>
-                </ul>
               </div>
-
-              {/* Gaming & Liquor */}
-              <div className="bg-white rounded-2xl p-8 border border-gray-100 hover:shadow-lg transition-shadow">
-                <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
-                  <i className="lni lni-crown-4 text-2xl text-[#1e40af]"></i>
-                </div>
-                <h3 className="text-2xl font-semibold text-gray-900 mb-4">Gaming & Liquor</h3>
-                <p className="text-gray-600 mb-6">
-                  State gaming regulations, liquor licensing, and harm minimisation - all the requirements that matter to venues.
+              <div className="bg-white rounded-2xl p-8 border border-gray-100">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Evidence-ready</h3>
+                <p className="text-gray-600">
+                  Time-stamped incidents, attachments, and outcomes streamline audit & board reporting.
                 </p>
-                <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <i className="lni lni-check text-[#1e40af] text-sm mt-1 mr-2"></i>
-                    <span className="text-sm text-gray-700">RSA/RSG training tracking</span>
-                  </li>
-                  <li className="flex items-start">
-                    <i className="lni lni-check text-[#1e40af] text-sm mt-1 mr-2"></i>
-                    <span className="text-sm text-gray-700">EGM compliance</span>
-                  </li>
-                  <li className="flex items-start">
-                    <i className="lni lni-check text-[#1e40af] text-sm mt-1 mr-2"></i>
-                    <span className="text-sm text-gray-700">Liquor licensing requirements</span>
-                  </li>
-                </ul>
               </div>
-
-              {/* WHS */}
-              <div className="bg-white rounded-2xl p-8 border border-gray-100 hover:shadow-lg transition-shadow">
-                <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-6">
-                  <i className="lni lni-clipboard-check text-2xl text-green-600"></i>
-                </div>
-                <span className="text-[#1e40af]">STAY AWAY FROM NON-GAMING.</span> <h3 className="text-2xl font-semibold text-gray-900 mb-4">Health & Safety</h3>
-                <p className="text-gray-600 mb-6">
-                  WHS risk assessments, incident reporting, and safety training - keep your venue and staff safe.
+              <div className="bg-white rounded-2xl p-8 border border-gray-100">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Interoperable</h3>
+                <p className="text-gray-600">
+                  Email/SMS/pager delivery and integrations with internal reporting. Importantly, no gaming-system lock-in.
                 </p>
-                <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <i className="lni lni-check text-[#1e40af] text-sm mt-1 mr-2"></i>
-                    <span className="text-sm text-gray-700">Incident reporting & investigation</span>
-                  </li>
-                  <li className="flex items-start">
-                    <i className="lni lni-check text-[#1e40af] text-sm mt-1 mr-2"></i>
-                    <span className="text-sm text-gray-700">Safety training records</span>
-                  </li>
-                  <li className="flex items-start">
-                    <i className="lni lni-check text-[#1e40af] text-sm mt-1 mr-2"></i>
-                    <span className="text-sm text-gray-700">Equipment maintenance logs</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Mobile App Feature */}
-        <section className="py-32 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
-              <div>
-                <span className="text-[#1e40af]">NO MOBILE APP.</span>
-                <h2 className="text-5xl font-bold text-gray-900 mb-8 leading-tight">
-                  Compliance in your pocket.
-                </h2>
-                <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                  Your team can complete inspections, report incidents, and check obligations 
-                  from anywhere. Everything syncs instantly.
-                </p>
-                <div className="grid sm:grid-cols-2 gap-8 mb-8">
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-4 text-lg">For Managers</h4>
-                    <ul className="space-y-3">
-                      <li className="flex items-start">
-                        <i className="lni lni-check text-[#1e40af] text-sm mt-1 mr-2"></i>
-                        <span className="text-gray-700">Review compliance status</span>
-                      </li>
-                      <li className="flex items-start">
-                        <i className="lni lni-check text-[#1e40af] text-sm mt-1 mr-2"></i>
-                        <span className="text-gray-700">Approve corrective actions</span>
-                      </li>
-                      <li className="flex items-start">
-                        <i className="lni lni-check text-[#1e40af] text-sm mt-1 mr-2"></i>
-                        <span className="text-gray-700">Get push notifications</span>
-                      </li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-4 text-lg">For Staff</h4>
-                    <ul className="space-y-3">
-                      <li className="flex items-start">
-                        <i className="lni lni-check text-[#1e40af] text-sm mt-1 mr-2"></i>
-                        <span className="text-gray-700">Complete inspections</span>
-                      </li>
-                      <li className="flex items-start">
-                        <i className="lni lni-check text-[#1e40af] text-sm mt-1 mr-2"></i>
-                        <span className="text-gray-700">Report incidents instantly</span>
-                      </li>
-                      <li className="flex items-start">
-                        <i className="lni lni-check text-[#1e40af] text-sm mt-1 mr-2"></i>
-                        <span className="text-gray-700">Access training materials & reference documentation</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="flex space-x-4">
-                  <Link 
-                    href="#" 
-                    className="transition-transform hover:scale-105"
-                  >
-                    <Image
-                      src="/apple-app-store.svg"
-                      alt="Download on the App Store"
-                      width={160}
-                      height={48}
-                      className="h-12 w-auto"
-                    />
-                  </Link>
-                  <Link 
-                    href="#" 
-                    className="transition-transform hover:scale-105"
-                  >
-                    <Image
-                      src="/google-play.svg"
-                      alt="Get it on Google Play"
-                      width={160}
-                      height={48}
-                      className="h-12 w-auto"
-                    />
-                  </Link>
-                </div>
-              </div>
-
-              <div className="relative">
-                <div className="bg-gradient-to-br from-[#1e40af] to-blue-600 rounded-3xl p-8 text-white transform -rotate-3 hover:rotate-0 transition-transform duration-300">
-                  <div className="bg-white bg-opacity-20 rounded-2xl p-6">
-                    <h3 className="font-semibold mb-6 text-white text-lg">Mobile Dashboard</h3>
-                    <div className="space-y-4">
-                      <div className="bg-white bg-opacity-30 rounded-xl p-4">
-                        <div className="flex justify-between items-center">
-                          <span className="text-white font-medium">Gaming Floor Check</span>
-                          <span className="text-xs bg-green-500 px-3 py-1 rounded-full text-white">Complete</span>
-                        </div>
-                      </div>
-                      <div className="bg-white bg-opacity-30 rounded-xl p-4">
-                        <div className="flex justify-between items-center">
-                          <span className="text-white font-medium">DOSA Inspection</span>
-                          <span className="text-xs bg-yellow-500 px-3 py-1 rounded-full text-white">In Progress</span>
-                        </div>
-                      </div>
-                      <div className="bg-white bg-opacity-30 rounded-xl p-4">
-                        <div className="flex justify-between items-center">
-                          <span className="text-white font-medium">Staff Training</span>
-                          <span className="text-xs bg-blue-500 px-3 py-1 rounded-full text-white">Due Soon</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="absolute -bottom-6 -right-6 w-24 h-32 bg-purple-500 rounded-lg opacity-10"></div>
-                <div className="absolute -top-6 -left-6 w-32 h-24 bg-green-500 rounded-lg opacity-10"></div>
               </div>
             </div>
           </div>
         </section>
 
         {/* Final CTA */}
-        <section className="py-32 bg-[#1e40af]">
+        <section className="py-28 bg-[#1E4D8F]">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-5xl font-bold text-white mb-8 leading-tight">
-              Ready to nail compliance <br/>
-              AND improve productivity and efficiency?
+            <h2 className="text-5xl font-bold text-white mb-6 leading-tight">
+              Ready to strengthen safer gambling on your floor?
             </h2>
-            <p className="text-2xl text-blue-100 mb-12 leading-relaxed">
-              Subscribe to one of our Lite or Pro plans today. Or schedule a time for a demo. 
-              See how much time and stress Assure can save you.
+            <p className="text-2xl text-blue-100 mb-10 leading-relaxed">
+              See how SafePlay helps RGOs act sooner with better evidence - and gives managers the audit trail they need.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Link 
-                href="/contact" 
-                className="bg-white text-[#1e40af] px-10 py-5 rounded-xl font-semibold hover:bg-gray-50 transition-colors flex items-center justify-center text-lg"
+              <Link
+                href="/contact"
+                className="bg-white text-[#1E4D8F] px-10 py-5 rounded-xl font-semibold hover:bg-gray-50 transition-colors text-lg"
               >
-                <i className="lni lni-rocket-6 mr-3"></i>
-                Schedule a Demo
-              </Link>
-              <Link 
-                href="/pricing" 
-                className="border border-blue-300 text-white px-10 py-5 rounded-xl font-semibold hover:bg-blue-600 transition-colors flex items-center justify-center text-lg"
-              >
-                <i className="lni lni-tap-quick mr-3"></i>
-                View Pricing
+                Book a walkthrough
               </Link>
             </div>
             <p className="text-blue-200 text-lg mt-6">
-              Month-to-month plan options • Cancel anytime • Australian support team
+              Month-to-month options  •  Cancel anytime  •  Local support
             </p>
           </div>
         </section>
 
-        {/* Footer Component */}
         <Footer />
       </div>
     </>
   )
-}
-
-export const getStaticProps: GetStaticProps = async () => {
-  try {
-    const posts = await getPosts('assure', 3)
-    return {
-      props: {
-        posts: posts || []
-      },
-      revalidate: 300
-    }
-  } catch (error) {
-    console.error('Error fetching posts:', error)
-    return {
-      props: {
-        posts: []
-      },
-      revalidate: 300
-    }
-  }
 }

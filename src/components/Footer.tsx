@@ -70,10 +70,10 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold mb-4">Solutions</h3>
             <ul className="space-y-2 text-sm text-gray-600">
-              <li><Link href="/features" className="hover:text-[#1e40af] transition-colors">Features</Link></li>
-              <li><Link href="/pricing" className="hover:text-[#1e40af] transition-colors">Pricing</Link></li>
-              <li><Link href="/case-studies" className="hover:text-[#1e40af] transition-colors">Case Studies</Link></li>
-              <li><Link href="/documentation" className="hover:text-[#1e40af] transition-colors">Documentation</Link></li>
+              <li><a href="https://assure.involv.com.au" className="hover:text-[#1e40af] transition-colors">Assure</a></li>
+              <li><a href="https://sentinel.involv.com.au" className="hover:text-[#1e40af] transition-colors">Sentinel</a></li>
+              <li><a href="https://safeplay.involv.com.au" className="hover:text-[#1e40af] transition-colors">SafePlay</a></li>
+              <li><a href="https://primeedge.involv.com.au" className="hover:text-[#1e40af] transition-colors">PrimeEdge</a></li>
             </ul>
           </div>
           
@@ -83,7 +83,6 @@ export default function Footer() {
             <ul className="space-y-2 text-sm text-gray-600">
               <li><a href="https://involv.com.au/about" className="hover:text-[#1e40af] transition-colors">About Involv</a></li>
               <li><Link href="/insights" className="hover:text-[#1e40af] transition-colors">Insights</Link></li>
-              <li><Link href="/faqs" className="hover:text-[#1e40af] transition-colors">FAQs</Link></li>
               <li><Link href="/contact" className="hover:text-[#1e40af] transition-colors">Contact</Link></li>
             </ul>
           </div>

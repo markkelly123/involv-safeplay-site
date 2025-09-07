@@ -1,27 +1,26 @@
+/* globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --bg: #F7FAFC;
+  --card: #FFFFFF;
+  --text: #2D3748;
+  --text-muted: #4A5568;
+  --text-invert: #FFFFFF;
+  --border: #E2E8F0;
+  --brand: #1E4D8F; /* primary */
+  --subtle: #EDF2F7;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.dark, [data-theme="dark"] {
+  --bg: #0B1D36;           /* deep navy background */
+  --card: #102A4D;         /* elevated surfaces */
+  --text: #E6EEF7;         /* soft light text */
+  --text-muted: #C6DAF0;
+  --text-invert: #0B1D36;
+  --border: #163B6D;
+  --brand: #2B6CB0;        /* lift brand blue slightly in dark mode */
+  --subtle: #163B6D;
 }

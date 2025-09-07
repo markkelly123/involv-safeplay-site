@@ -1,3 +1,4 @@
+// src/pages/about.tsx
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -10,8 +11,11 @@ export default function About() {
   return (
     <>
       <Head>
-        <title>About Assure - Built by Industry Veterans Who Understand Your Challenges</title>
-        <meta name="description" content="Meet the team behind Assure - former ALH executives, gaming regulatory legal experts, and compliance specialists who understand the unique challenges facing Australian pubs and clubs." />
+        <title>About SafePlay – Built by Venue Operators & Regulatory Experts</title>
+        <meta
+          name="description"
+          content="SafePlay is safer gaming intelligence built by venue operators and regulatory experts. We help RGOs identify risk earlier, act sooner, and document everything - carded and uncarded."
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* Favicon */}
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -33,36 +37,41 @@ export default function About() {
           </nav>
         </div>
 
-        {/* Hero Section */}
+        {/* Hero */}
         <section className="bg-gradient-to-br from-blue-50 to-white py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
                 <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-gray-900">
-                  Built by Industry Veterans Who Actually Understand Your Challenges
+                  Built by People Who Run Venues - Not Just Talk About Them
                 </h1>
                 <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                  We are not consultants who lack hands-on, coal-face experience. We are former gaming operators, gaming regulatory legal experts, and compliance specialists who have lived the reality of managing compliance at scale.
+                  SafePlay is the safer gaming intelligence pillar of Involv’s Three Tier Response Model.
+                  We’re operators and regulatory specialists who know the realities of busy floors, mix of carded and uncarded play,
+                  and evolving responsible gaming expectations.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <a href="https://involv.com.au/about/our-team" className="bg-[#1e40af] text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium text-center">
-                    Meet Our Team
-                  </a>
-                  <a href="https://involv.com.au/about/why-involv" className="border border-[#1e40af] text-[#1e40af] px-8 py-3 rounded-lg hover:bg-[#1e40af] hover:text-white transition-colors font-medium text-center">
-                    Why Choose Involv
-                  </a>
+                  <Link
+                    href="/contact"
+                    className="bg-[#1e40af] text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium text-center"
+                  >
+                    Talk to the Team
+                  </Link>
+                  <Link
+                    href="/features"
+                    className="border border-[#1e40af] text-[#1e40af] px-8 py-3 rounded-lg hover:bg-[#1e40af] hover:text-white transition-colors font-medium text-center"
+                  >
+                    Why SafePlay
+                  </Link>
                 </div>
               </div>
+
               <div className="bg-white rounded-lg p-8 shadow-lg border">
                 <div className="text-center mb-6">
-                  <h3 className="text-xl font-semibold mb-4 text-[#1e40af]">Industry Credibility</h3>
+                  <h3 className="text-xl font-semibold mb-4 text-[#1e40af]">What We Stand On</h3>
                   <div className="grid grid-cols-2 gap-4 text-center">
                     <div>
-                      <div className="text-3xl font-bold text-gray-900">13K</div>
-                      <div className="text-gray-500 text-sm">EGMs Previously Managed</div>
-                    </div>
-                    <div>
-                      <div className="text-3xl font-bold text-gray-900">80+</div>
+                      <div className="text-3xl font-bold text-gray-900">40+</div>
                       <div className="text-gray-500 text-sm">Years Combined Experience</div>
                     </div>
                     <div>
@@ -71,25 +80,32 @@ export default function About() {
                     </div>
                     <div>
                       <div className="text-3xl font-bold text-gray-900">100%</div>
-                      <div className="text-gray-500 text-sm">Venue Focused</div>
+                      <div className="text-gray-500 text-sm">Venue-First Design</div>
+                    </div>
+                    <div>
+                      <div className="text-3xl font-bold text-gray-900">Real-Time</div>
+                      <div className="text-gray-500 text-sm">Carded & Uncarded Coverage</div>
                     </div>
                   </div>
                 </div>
                 <p className="text-gray-600 text-sm text-center">
-                  A team of gaming industry experts: gaming operators, regulatory legal and compliance experts who have lived and absolutely appreciate your operational realities.
+                  SafePlay features venue-tested workflows
+                  that help RGOs act sooner and document better.
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Our Story Section */}
+        {/* Our Story */}
         <section className="bg-gray-50 py-16">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold mb-4 text-gray-900">Our Story</h2>
               <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-                Assure was created by the team at Involv - seasoned gaming professionals who recognised a gap in the market: no purpose-built compliance technology for Australian pubs and clubs.
+                SafePlay was created to solve the hardest part of monitoring for play activity in pubs and clubs:
+                seeing the patterns humans miss - especially during peak periods and in uncarded play environments - then turning
+                those signals into respectful conversations and audit-ready evidence.
               </p>
             </div>
 
@@ -97,17 +113,20 @@ export default function About() {
               <div>
                 <h3 className="text-2xl font-bold mb-4 text-[#1e40af]">The Problem We Saw</h3>
                 <p className="text-gray-600 mb-6 leading-relaxed">
-                  Venue managers are overwhelmed by gaming compliance paperwork, juggling countless SOPs, relying on calendar reminders to track deadlines, and operating without purpose-built technology. Generic compliance tools don't understand the unique needs of gaming venues.
+                  RGOs are expected to monitor everything. It's not practically possible. Subtle but harmful behaviours often look normal on a busy floor,
+                  and anonymous (uncarded) play hides most signals. Generic compliance tools or latent analysis weren’t built for this reality.
                 </p>
                 <p className="text-gray-600 mb-6 leading-relaxed">
-                  At the same time, regulations continue to evolve and become more complex. AUSTRAC requirements, state gaming compliance, responsible gambling obligations - all require specialised knowledge and systems built specifically for the gaming industry.
+                  Regulations and community expectations continue to evolve. Venues need real-time monitoring, venue-tuned thresholds,
+                  and a clean evidence trail - without locking into a single gaming system or app footprint.
                 </p>
                 <p className="text-gray-600 leading-relaxed">
-                  We had a unique view of the market and we knew there was a better way - a compliance platform built specifically for Australian pubs and clubs, by people who actually understand how venues operate.
+                  SafePlay was developed to be the monitoring-tech pillar in a practical, human-centred framework — the Three Tier Response Model.
                 </p>
               </div>
+
               <div className="bg-white rounded-lg p-8 shadow-sm border">
-                <h4 className="text-lg font-semibold mb-4 text-gray-900">What Makes Assure Different</h4>
+                <h4 className="text-lg font-semibold mb-4 text-gray-900">What Makes SafePlay Different</h4>
                 <div className="space-y-4">
                   {differentiators.map((item, index) => (
                     <div key={index} className="flex items-start">
@@ -131,7 +150,8 @@ export default function About() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4 text-gray-900">Our Mission</h2>
             <p className="text-gray-600 text-lg max-w-3xl mx-auto">
-              To transform compliance burdens into competitive advantages for Australian pubs and clubs, delivering practical technology solutions that actually work in the real world.
+              Advance a <strong>safer gaming</strong> model that shares responsibility: give operators real-time visibility to catch risk early, engage patrons respectfully, 
+              and maintain an auditable record of care.
             </p>
           </div>
 
@@ -148,13 +168,13 @@ export default function About() {
           </div>
         </section>
 
-        {/* Leadership Highlight */}
+        {/* Leadership */}
         <section className="bg-gray-50 py-16">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4 text-gray-900">Led by Industry Veterans</h2>
+              <h2 className="text-3xl font-bold mb-4 text-gray-900">Led by Operators & Experts</h2>
               <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-                Our leadership team brings together the exact expertise needed to build compliance technology that works for venues.
+                Our leadership blends operational experience with regulatory and product expertise - so SafePlay works on the floor, not just on paper.
               </p>
             </div>
 
@@ -162,10 +182,7 @@ export default function About() {
               {leadership.map((leader, index) => (
                 <div key={index} className="text-center">
                   <div className="bg-white rounded-lg p-6 mb-4 shadow-sm border">
-                    <ProfileImage 
-                      leader={leader}
-                      className="w-20 h-20 rounded-full mx-auto mb-4"
-                    />
+                    <ProfileImage leader={leader} className="w-20 h-20 rounded-full mx-auto mb-4" />
                     <h3 className="text-lg font-semibold text-gray-900 mb-1">{leader.name}</h3>
                     <p className="text-[#1e40af] text-sm font-medium mb-3">{leader.role}</p>
                     <p className="text-gray-600 text-xs leading-relaxed">{leader.highlight}</p>
@@ -175,10 +192,13 @@ export default function About() {
             </div>
 
             <div className="text-center mt-8">
-              <a href="https://involv.com.au/about/our-team" className="inline-flex items-center bg-[#1e40af] text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium">
-                Meet the Full Team
+              <Link
+                href="/contact"
+                className="inline-flex items-center bg-[#1e40af] text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+              >
+                Connect with SafePlay
                 <i className="lni lni-arrow-right text-xl ml-2"></i>
-              </a>
+              </Link>
             </div>
           </div>
         </section>
@@ -186,9 +206,10 @@ export default function About() {
         {/* Our Approach */}
         <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4 text-gray-900">How Assure Works</h2>
+            <h2 className="text-3xl font-bold mb-4 text-gray-900">How SafePlay Helps Venues</h2>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              We do not just build software and walk away. Our platform is designed based on real venue experience to ensure it actually works in your operation.
+              We don’t ship software and step back. We implement with you, calibrate thresholds to your venue profile,
+              and keep improving as your team and trading patterns evolve.
             </p>
           </div>
 
@@ -217,12 +238,12 @@ export default function About() {
           </div>
         </section>
 
-        {/* CTA Section */}
+        {/* CTA */}
         <section className="bg-[#1e40af] py-16">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl font-bold mb-4 text-white">Ready to Experience Purpose-Built Compliance?</h2>
+            <h2 className="text-3xl font-bold mb-4 text-white">Ready to See SafePlay in Action?</h2>
             <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
-              Stop wrestling with generic tools. Experience compliance technology built specifically for Australian gaming venues.
+              Experience purpose-built safer gaming intelligence for Australian venues - for carded and uncarded environments.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/contact" className="bg-white text-[#1e40af] px-8 py-3 rounded-lg hover:bg-gray-50 transition-colors font-medium">
@@ -235,147 +256,123 @@ export default function About() {
           </div>
         </section>
 
-        {/* Footer */}
         <Footer />
       </div>
     </>
   )
 }
 
-// Profile Image Component with Error Handling
+/* ---------------------- Profile Image Component ---------------------- */
 function ProfileImage({ leader, className }: { leader: any; className: string }) {
   return (
     <div className={`${className} overflow-hidden bg-[#1e40af] flex items-center justify-center relative`}>
-      <img 
+      <img
         src={`/images/team/${leader.slug}.jpg`}
         alt={leader.name}
         className="w-full h-full object-cover"
         onError={(e) => {
-          const target = e.target as HTMLImageElement;
-          target.style.display = 'none';
-          const fallback = target.nextElementSibling as HTMLElement;
-          if (fallback) fallback.style.display = 'flex';
+          const target = e.target as HTMLImageElement
+          target.style.display = 'none'
+          const fallback = target.nextElementSibling as HTMLElement
+          if (fallback) fallback.style.display = 'flex'
         }}
       />
       <div className="absolute inset-0 bg-[#1e40af] text-white text-2xl font-bold hidden items-center justify-center">
         {leader.initials}
       </div>
     </div>
-  );
+  )
 }
 
-// Data
+/* ------------------------------- Data ------------------------------- */
+
 const differentiators = [
-  {
-    title: "Built for Gaming Venues",
-    description: "Purpose-built for Australian pubs and clubs, not generic business compliance."
-  },
-  {
-    title: "Industry Expert Design",
-    description: "Created by gaming regulatory legal professionals who understand practical implementation."
-  },
-  {
-    title: "Real-World Testing",
-    description: "Every feature tested with actual venue operators to ensure it works in practice."
-  },
-  {
-    title: "Ongoing Updates",
-    description: "Continuously updated as regulations evolve and new requirements emerge."
-  }
+  { title: 'Built for Venues', description: 'Purpose-built for Australian pubs and clubs, not generic enterprise compliance.' },
+  { title: 'Operator DNA', description: 'Designed with people who run venues and understand uncarded play and peak-period realities.' },
+  { title: 'Real-Time, Practical', description: 'Live monitoring, venue-tuned thresholds, and respectful RGO workflows.' },
+  { title: 'Interoperable by Design', description: 'Works via web with email/SMS/pager delivery—no system lock-in.' }
 ]
 
 const values = [
-  {
-    icon: "lni lni-head-bulb-2",
-    title: "Practical Solutions",
-    description: "Every feature must work in the real world of venue operations, not just on paper."
-  },
-  {
-    icon: "lni lni-hand-shake",
-    title: "Partnership Approach",
-    description: "We work alongside your team as trusted technology partners, not distant vendors."
-  },
-  {
-    icon: "lni lni-trend-up-1",
-    title: "Business Growth",
-    description: "Compliance should enable growth, not hinder it. We align technology with your commercial goals."
-  }
+  { icon: 'lni lni-head-bulb-2', title: 'Practical First', description: 'Everything must work on a live floor, not just in a diagram.' },
+  { icon: 'lni lni-hand-shake', title: 'Partnership', description: 'We implement with you and support RGOs to succeed.' },
+  { icon: 'lni lni-shield-1', title: 'Care & Compliance', description: 'Player wellbeing and regulatory confidence go hand in hand.' }
 ]
 
 const leadership = [
   {
-    name: "Louise Lane",
-    slug: "louise-lane",
-    role: "Chief Executive Officer",
-    initials: "LL",
-    highlight: "Regulatory legal expert specialising in gaming, liquor, AML, and compliance frameworks."
+    name: 'Louise Lane',
+    slug: 'louise-lane',
+    role: 'Chief Executive Officer',
+    initials: 'LL',
+    highlight: 'Regulatory legal specialist across gaming, liquor, AML/CTF, and responsible-gambling frameworks.'
   },
   {
-    name: "Con Nikitas",
-    slug: "con-nikitas",
-    role: "Chief Commercial Officer",
-    initials: "CN",
-    highlight: "30 years gaming industry experience, former ALH Group executive managing 13,000 EGMs."
+    name: 'Tim Barnett',
+    slug: 'tim-barnett',
+    role: 'Chief Strategy & Operations',
+    initials: 'TB',
+    highlight: 'Venue operations leader with deep hospitality & gaming experience; champions floor-first product decisions.'
   },
   {
-    name: "Tim Barnett",
-    slug: "tim-barnett",
-    role: "Chief Strategy Officer",
-    initials: "TB",
-    highlight: "20+ years hospitality & gaming leadership across Australia and international markets."
+    name: 'Mark Kelly',
+    slug: 'mark-kelly',
+    role: 'Chief Operating Officer',
+    initials: 'MK',
+    highlight: 'Transformation and product delivery leader focused on safer-gaming outcomes and RGO enablement.'
   },
   {
-    name: "Mark Kelly",
-    slug: "mark-kelly",
-    role: "Chief Operating Officer",
-    initials: "MK",
-    highlight: "30 years transformational change experience, 6 years specialising in gaming compliance and loyalty."
+    name: 'Advisory Panel',
+    slug: 'advisory-panel',
+    role: 'Industry & Research Advisors',
+    initials: 'AP',
+    highlight: 'Practitioners, researchers and lived-experience voices informing harm-minimisation design and evidence standards.'
   }
 ]
 
 const approach = [
   {
-    icon: "lni lni-search-bulb",
-    title: "Deep Venue Understanding",
-    description: "Built based on comprehensive understanding of venue operations, regulatory requirements, and practical challenges.",
+    icon: 'lni lni-search-bulb',
+    title: 'Deep Venue Understanding',
+    description: 'We learn your trading pattern, patron mix, and floor layout before we calibrate signals.',
     points: [
-      "Pre-configured compliance frameworks",
-      "Automated regulatory tracking",
-      "Venue-specific workflow design",
-      "Integration with existing systems"
+      'Venue-specific thresholds and routing',
+      'Carded and uncarded coverage',
+      'Respectful intervention guidance',
+      'Evidence prompts for every alert'
     ]
   },
   {
-    icon: "lni lni-screwdriver-wrench-3",
-    title: "Easy Implementation",
-    description: "Designed for quick setup and minimal disruption to your existing operations.",
+    icon: 'lni lni-screwdriver-wrench-3',
+    title: 'Fast, Low-Friction Setup',
+    description: 'Minimal footprint to get started; works alongside existing systems and reporting.',
     points: [
-      "Guided onboarding process",
-      "Training materials and support",
-      "Gradual feature rollout",
-      "Dedicated customer success team"
+      'Guided onboarding',
+      'RGO and manager training',
+      'Web access + SMS/email/pager delivery',
+      'No native app dependency'
     ]
   },
   {
-    icon: "lni lni-bar-chart-7",
-    title: "Measurable Results",
-    description: "Track your compliance performance and demonstrate audit readiness with clear reporting.",
+    icon: 'lni lni-bar-chart-7',
+    title: 'Measurable Outcomes',
+    description: 'Improve time-to-intervene and create an audit-ready trail that stands up to scrutiny.',
     points: [
-      "Real-time compliance dashboards",
-      "Audit trail documentation",
-      "Risk monitoring and alerts",
-      "Performance analytics"
+      'Time-stamped incidents and outcomes',
+      'Shift and board-level reporting',
+      'Noise reduction through calibration',
+      'Continuous performance reviews'
     ]
   },
   {
-    icon: "lni lni-flask-1",
-    title: "Continuous Innovation",
-    description: "Regular updates ensure you stay ahead of regulatory changes and industry best practices.",
+    icon: 'lni lni-flask-1',
+    title: 'Continuous Improvement',
+    description: 'We iterate with your team as regulations and venue realities evolve.',
     points: [
-      "Automatic regulatory updates",
-      "New feature releases",
-      "Industry trend insights",
-      "Customer feedback integration"
+      'Regular threshold reviews',
+      'New signal and workflow releases',
+      'Ops feedback loops',
+      'Jurisdictional alignment updates'
     ]
   }
 ]

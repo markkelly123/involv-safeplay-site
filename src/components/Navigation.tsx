@@ -36,7 +36,7 @@ export default function Navigation({ currentPath = '' }: NavigationProps) {
       <header className="bg-white text-gray-700 border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between relative">
           <Link href="/" className="flex items-center">
-            <img src="/logo-involv-assure2.svg" alt="Involv Assure" className="h-6 w-auto" />
+            <img src="/logo-safeplay-blue.png" alt="Involv Assure" className="h-10 w-auto" />
           </Link>
 
           {/* Desktop Navigation */}
@@ -49,11 +49,6 @@ export default function Navigation({ currentPath = '' }: NavigationProps) {
             {/* Case Studies */}
             <Link href="/case-studies" className={getLinkClasses('/case-studies')}>
               Case Studies
-            </Link>
-
-            {/* Pricing */}
-            <Link href="/pricing" className={getLinkClasses('/pricing')}>
-              Pricing
             </Link>
 
             {/* Insights */}
@@ -105,11 +100,6 @@ export default function Navigation({ currentPath = '' }: NavigationProps) {
               {/* Case Studies */}
               <Link href="/case-studies" className={`block py-2 ${getLinkClasses('/case-studies')}`}>
                 Case Studies
-              </Link>
-
-              {/* Pricing */}
-              <Link href="/pricing" className={`block py-2 ${getLinkClasses('/pricing')}`}>
-                Pricing
               </Link>
 
               {/* Insights */}
