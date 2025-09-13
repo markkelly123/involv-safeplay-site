@@ -49,17 +49,17 @@ export default function SafePlay() {
             </div>
             <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
               <span className="bg-gradient-to-r from-brand to-brand-medium bg-clip-text text-transparent">
-                Empower RGOs with
+                Empower RGOs<br />
               </span>{' '}
-              <span className="text-primary">Real-Time Floor Intelligence</span>
+              <span className="text-primary">with Real-Time Floor Intelligence</span>
             </h1>
             <p className="text-xl text-brand mb-3 font-semibold">
               Monitoring-tech built for Australian venues - carded AND uncarded play
             </p>
             <p className="text-xl text-muted mb-10 max-w-4xl mx-auto leading-relaxed">
               SafePlay is the monitoring-tech pillar in Involv’s <strong>Three Tier Response Model</strong>.
-              It surfaces risk patterns early, guides staff conversations, and documents everything. Gaming system agnostic.
-              Not reliant on high rates of carded play.
+              It surfaces risk patterns early, guides staff conversations, and documents everything.<br /><br />
+              <strong>Gaming system agnostic. Not reliant on high rates of carded play.</strong>
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link
